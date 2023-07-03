@@ -1,6 +1,10 @@
+This folder normally contains the data from GBIF's “Virtual Herbarium Germany” (https://doi.org/10.15468/dl.tued2e). Only the sample files are contained here.
+
+# Notes on the Data Structures
+
 The only way to get media or source URLs together with `occurrence.txt` is to connect `gbifID` in both of the files of:  `multimedia.txt` and `occurrence.txt`.
 
-# multimedia.txt
+## multimedia.txt
 
 Understand `multimedia.txt`:
 
@@ -31,7 +35,7 @@ awk --field-separator='\t'  'BEGIN{OFS="\t"} NR<6{ print  $1, $2, $4, $5 }' mult
   # 1019439046              https://herbarium.bgbm.org/data/iiif/B100190852/manifest.json        https://iiif.bgbm.org/?manifest=https://herbarium.bgbm.org/object/B100190852/manifest.json
 ```
 
-# occurrence.txt
+## occurrence.txt
 
 Understand `occurrence.txt`.
 
