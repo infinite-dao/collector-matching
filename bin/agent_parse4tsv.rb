@@ -19,8 +19,10 @@ output_file_path = 'data/VHde_0195853-230224095556074_BGBM/occurrence_recordedBy
 
 # # # # # # main code # # # # # #
 
-printf "Read data from \033[0;34m" + input_file_path + "\033[0m\n"
-printf "Write data to \033[0;34m" + output_file_path + "\033[0m\n"
+printf "We read tabulator seperated input data and parse the names (from the 1st column)\n"
+printf "The text data must have a column header; if there are any other columns, they will be added to the parsed output.\n"
+printf "- read data from \033[0;34m" + input_file_path + "\033[0m\n"
+printf "- rite data to \033[0;34m" + output_file_path + "\033[0m\n"
 
 # do_something unless some_condition
 
