@@ -8,8 +8,12 @@ Here we gathered tools to assist the name matching of (biological) collector nam
 
 ## Getting Data
 
+BGBM example:
 - [`create_wikidata_datasets_botanists.ipynb`](./create_wikidata_datasets_botanists.ipynb) – to get data of botanists from WikiData
 - [`create_bgbm_gbif-occurrence_collectors_dataset.ipynb`](./create_bgbm_gbif-occurrence_collectors_dataset.ipynb) – create an example data set from GIBF (*Virtual Herbarium Germany* (BGBM) <https://doi.org/10.15468/dl.tued2e>)
+
+Plazi example:
+- [`create_plazi_collectors_dataset.ipynb`](./create_plazi_collectors_dataset.ipynb) – create data from Plazi‘s Collection Statistics “Materials Citation Data” (<https://tb.plazi.org/GgServer/srsStats> TODO matching)
 
 ## Matching of Names
 
