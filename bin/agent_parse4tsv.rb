@@ -10,26 +10,41 @@ require 'dwc_agent' # installation see https://libraries.io/rubygems/dwc_agent
 #  dwcagent "A. Cano,E."
 # [{"family":"Cano","given":"A.","suffix":null,"particle":null,"dropping_particle":null,"nick":null,"appellation":null,"title":null}]
 
-# Define the input and output file paths
-# input_file_path = 'data/names.txt'
-# output_file_path = 'data/output/names_parsed.txt'
-# input_file_path = 'data/VHde_0195853-230224095556074_BGBM/testdata_agent_parse.tsv'
 input_file_path = 'data/VHde_0195853-230224095556074_BGBM/occurrence_recordedBy_occurrenceIDs_20230524.tsv'
 output_file_path = 'data/VHde_0195853-230224095556074_BGBM/occurrence_recordedBy_occurrenceIDs_20230524_parsed.tsv'
 
+require 'optparse'
+
+options = {}
+OptionParser.new do |opt|
+  opt.banner = "Usage: ruby agent_parse4tsv.rb [options]\n" \
+      + "\n" \
+      + "  We read tabulator seperated input data and parse the names (from the 1st column)\n" \
+      + "  The text data must have a column header; if there are any other columns, they will be added to the parsed output.\n" \
+      + "  input (default) \033[0;34m" + input_file_path + "\033[0m\n" \
+      + "  output (default) \033[0;34m" + output_file_path + "\033[0m\n" \
+      + "\nOptions: \n"
+  opt.on('-i [input]', '--input', 'file and path of the input data (tsv)') { |o| options[:input] = o }
+  opt.on('-o [output]', '--output', 'file and path of the output (tsv)') { |o| options[:output] = o }
+  options = { input: input_file_path, output: output_file_path }
+  opt.parse!(into: options)
+end.parse!
+
+# puts options # debug
+
+# do_something unless some_condition
+abort("\033[0;33mInput data not found\033[0m (STOP. Change the input file path in this script)") unless File.exist?(options[:input])
+
 # # # # # # main code # # # # # #
+input_file_path = options[:input]
+output_file_path = options[:output]
 
 printf "We read tabulator seperated input data and parse the names (from the 1st column)\n"
 printf "The text data must have a column header; if there are any other columns, they will be added to the parsed output.\n"
 printf "- read data from \033[0;34m" + input_file_path + "\033[0m\n"
 printf "- rite data to \033[0;34m" + output_file_path + "\033[0m\n"
-
-# do_something unless some_condition
-
-abort("\033[0;33mInput data not found\033[0m (STOP. Change the input_file_path in this script)") unless File.exist?(input_file_path)
-
-  
 printf "\033[0;33mContinue?\033[0m (type “y” or press any key to continue): "
+
 prompt = STDIN.gets.chomp
 exit unless prompt.downcase == 'y' || prompt.downcase == ''
 
