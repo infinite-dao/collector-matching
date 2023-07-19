@@ -20,6 +20,11 @@ Plazi example:
 - [`match_names_BGBM-dwcagent-parsed_vs_WikiData.ipynb`](./match_names_BGBM-dwcagent-parsed_vs_WikiData.ipynb) – performing a name matching of parsed collector names (from own source data) to WikiData botanist names
 - [`create_and_match_plazi_collectors_dataset.ipynb`](./create_and_match_plazi_collectors_dataset.ipynb) – create and match data from Plazi‘s Collection Statistics “Materials Citation Data” (<https://tb.plazi.org/GgServer/srsStats>)
 
+## Parsing of Name Lists
+
+See ☞ [`bin/README.md`](./bin/README.md).
+
+
 ## TODO
 
 - review and improve the code:
