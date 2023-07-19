@@ -13,11 +13,12 @@ BGBM example:
 - [`create_bgbm_gbif-occurrence_collectors_dataset.ipynb`](./create_bgbm_gbif-occurrence_collectors_dataset.ipynb) – create an example data set from GIBF (*Virtual Herbarium Germany* (BGBM) <https://doi.org/10.15468/dl.tued2e>)
 
 Plazi example:
-- [`create_plazi_collectors_dataset.ipynb`](./create_plazi_collectors_dataset.ipynb) – create data from Plazi‘s Collection Statistics “Materials Citation Data” (<https://tb.plazi.org/GgServer/srsStats> TODO matching)
+- [`create_plazi_collectors_dataset.ipynb`](./create_plazi_collectors_dataset.ipynb) – create only data from Plazi‘s Collection Statistics “Materials Citation Data” (<https://tb.plazi.org/GgServer/srsStats>)
 
 ## Matching of Names
 
 - [`match_names_BGBM-dwcagent-parsed_vs_WikiData.ipynb`](./match_names_BGBM-dwcagent-parsed_vs_WikiData.ipynb) – performing a name matching of parsed collector names (from own source data) to WikiData botanist names
+- [`create_and_match_plazi_collectors_dataset.ipynb`](./create_and_match_plazi_collectors_dataset.ipynb) – create and match data from Plazi‘s Collection Statistics “Materials Citation Data” (<https://tb.plazi.org/GgServer/srsStats>)
 
 ## TODO
 
