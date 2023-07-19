@@ -19,7 +19,7 @@ options = {}
 OptionParser.new do |opt|
   opt.banner = "Usage: ruby agent_parse4tsv.rb [options]\n" \
       + "\n" \
-      + "  We read tabulator seperated input data and parse the names (from the 1st column)\n" \
+      + "  We read tabulator separated input data and parse the names (from the 1st column)\n" \
       + "  The text data must have a column header; if there are any other columns, they will be added to the parsed output.\n" \
       + "  input (default) \033[0;34m" + input_file_path + "\033[0m\n" \
       + "  output (default) \033[0;34m" + output_file_path + "\033[0m\n" \
@@ -39,7 +39,7 @@ abort("\033[0;33mInput data not found\033[0m (STOP. Change the input file path i
 input_file_path = options[:input]
 output_file_path = options[:output]
 
-printf "We read tabulator seperated input data and parse the names (from the 1st column)\n"
+printf "We read tabulator separated input data and parse the names (from the 1st column)\n"
 printf "The text data must have a column header; if there are any other columns, they will be added to the parsed output.\n"
 printf "- read data from \033[0;34m" + input_file_path + "\033[0m\n"
 printf "- rite data to \033[0;34m" + output_file_path + "\033[0m\n"
