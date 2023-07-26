@@ -8,8 +8,10 @@ Here we gathered tools to assist the name matching of (biological) collector nam
 
 ## Getting Data
 
-BGBM example:
+WikiData:
 - [`create_wikidata_datasets_botanists.ipynb`](./create_wikidata_datasets_botanists.ipynb) – to get data of botanists from WikiData
+
+BGBM example:
 - [`create_bgbm_gbif-occurrence_collectors_dataset.ipynb`](./create_bgbm_gbif-occurrence_collectors_dataset.ipynb) – create an example data set from GIBF (*Virtual Herbarium Germany* (BGBM) <https://doi.org/10.15468/dl.tued2e>)
 
 Plazi example:
@@ -18,6 +20,7 @@ Plazi example:
 ## Matching of Names
 
 - [`match_names_BGBM-dwcagent-parsed_vs_WikiData.ipynb`](./match_names_BGBM-dwcagent-parsed_vs_WikiData.ipynb) – performing a name matching of parsed collector names (from own source data) to WikiData botanist names
+- [`match_names_BGBM-dwcagent-parsed_vs_WikiData_cosine-similarity.ipynb`](./match_names_BGBM-dwcagent-parsed_vs_WikiData_cosine-similarity.ipynb) – performing a name matching using cosine-similarity of parsed collector names (from own source data) to WikiData botanist names
 - [`create_and_match_plazi_collectors_dataset.ipynb`](./create_and_match_plazi_collectors_dataset.ipynb) – create and match data from Plazi‘s Collection Statistics “Materials Citation Data” (<https://tb.plazi.org/GgServer/srsStats>)
 
 ## Parsing of Name Lists
@@ -29,10 +32,11 @@ See ☞ [`bin/README.md`](./bin/README.md).
 
 - review and improve the code:
 
-    - test and improve name matching algorithm (<https://github.com/nielsklazenga/avh-collectors/cosine_similarity.ipynb>)
-    
-- add time matching as well
+    - compare name matching algorithm (<https://github.com/nielsklazenga/avh-collectors/cosine_similarity.ipynb> ⇌ `nearest_neighbour`)
 
+- improve name matching if own source data contain a full name, this can be matched against WikiData (perhaps parsed) `itemLabel`, which is mostly the full name
+
+- add time matching as well
     - floruit time span of person
     - recorded date of museum sample if no life data of the person are available ?occurrence.txt → eventDate? (see https://www.gbif.org/developer/occurrence section “Query parameters explained”
 
