@@ -13,6 +13,7 @@ WikiData:
 
 BGBM example:
 - [`create_bgbm_gbif-occurrence_collectors_dataset.ipynb`](./create_bgbm_gbif-occurrence_collectors_dataset.ipynb) – create an example data set from GIBF (*Virtual Herbarium Germany* (BGBM) <https://doi.org/10.15468/dl.tued2e>)
+- [`create_bgbm_gbif-occurrence_collectors_eventDate_dataset.ipynb`](./create_bgbm_gbif-occurrence_collectors_eventDate_dataset.ipynb) – create an example data set with collection date (`eventDate`) from GIBF (*Virtual Herbarium Germany* (BGBM) <https://doi.org/10.15468/dl.tued2e>)
 
 Plazi example:
 - [`create_plazi_collectors_dataset.ipynb`](./create_plazi_collectors_dataset.ipynb) – create only data from Plazi‘s Collection Statistics “Materials Citation Data” (<https://tb.plazi.org/GgServer/srsStats>)
@@ -37,6 +38,8 @@ See ☞ [`bin/README.md`](./bin/README.md).
 - improve name matching if own source data contain a full name, this can be matched against WikiData (perhaps parsed) `itemLabel`, which is mostly the full name
 
 - add time matching as well
+
+    - matching including `eventDate` (i.e. sampling date in this case; read https://www.gbif.org/data-quality-requirements-occurrences#dcEventDate)
     - floruit time span of person
     - recorded date of museum sample if no life data of the person are available ?occurrence.txt → eventDate? (see https://www.gbif.org/developer/occurrence section “Query parameters explained”
 
