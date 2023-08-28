@@ -21,6 +21,7 @@ Plazi example:
 ## Matching of Names
 
 - [`match_names_BGBM-dwcagent-parsed_vs_WikiData_k-nearest.ipynb`](./match_names_BGBM-dwcagent-parsed_vs_WikiData_k-nearest.ipynb) – performing a name matching of parsed collector names (from own source data) to WikiData botanist names
+- [`match_names_BGBM-dwcagent-parsed-eventDate_vs_WikiData_k-nearest.ipynb`](./match_names_BGBM-dwcagent-parsed-eventDate_vs_WikiData_k-nearest.ipynb) – performing a name matching of parsed collector names including eventDate (=date of sampling event)
 - [`match_names_BGBM-dwcagent-parsed_vs_WikiData_cosine-similarity.ipynb`](./match_names_BGBM-dwcagent-parsed_vs_WikiData_cosine-similarity.ipynb) – performing a name matching using cosine-similarity of parsed collector names (from own source data) to WikiData botanist names
 - [`create_and_match_plazi_collectors_dataset.ipynb`](./create_and_match_plazi_collectors_dataset.ipynb) – create and match data from Plazi‘s Collection Statistics “Materials Citation Data” (<https://tb.plazi.org/GgServer/srsStats>)
 
