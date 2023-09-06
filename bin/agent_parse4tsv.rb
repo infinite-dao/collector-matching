@@ -116,74 +116,105 @@ this_tsv.parse do |this_row|
   current_output_line=""; 
   current_logfile_line="";
   column_names = this_row.keys;
-  sprintf("i_input_line: %d\n", i_input_line)
-  # add header output
+
+  has_additional_data_columns=0
+  if column_names.length > 1
+    has_additional_data_columns=1
+  end
+  other_column_data_tabbed_output="" # check for other columns
+  
+  # var=sprintf("i_input_line: %d\n", i_input_line)
   if i_input_line == 1
+    # add header output
     current_output_line += dwc_agent_column_names.join("\t")
     if develop_flag_show_parsed_source
       current_output_line += "\t" + column_name_source_data      
     end
-    if column_names.length > 1
+    if has_additional_data_columns
       current_output_line += "\t" + column_names[1..].join("\t")
     end
     current_output_line +="\n"
-  end
-
-  other_column_data="" # check for other columns
-  if column_names.length > 1
-    column_names[1..].each do |field|
-      other_column_data+= "\t" + this_row[field].chomp
-    end
-  end
-
-  parsed_names = DwcAgent.parse(this_row[column_names[0]].chomp) # chomp ~ mampfen
-  cleaned_names = parsed_names.map { |field| DwcAgent.clean(field) }
-
-  if cleaned_names.length > 1
-  # cleaned_names.each_with_index { |item, i_name| puts "item #{item} with index #{i_name}" }
+  else # other (real) data lines
+    # prepare data row
+    source_names = this_row[column_names[0]]
     if develop_flag_show_parsed_source
-      cleaned_names.each_with_index {
-        |this_cleaned_name, i_name| current_output_line+= "#{
-          this_cleaned_name.values_at(:family, :given, :suffix, :particle, :dropping_particle, :nick, :appellation, :title)
-              .join("\t") + this_row[column_names[0]] + "\t" + other_column_data + "\n"
-        }"
-      }
+      source_names_tabbed_output = "\t" + source_names # it gets inserted, hence the \t prefix
     else
-      cleaned_names.each_with_index {
-        |this_cleaned_name, i_name| current_output_line+= "#{
-          this_cleaned_name.values_at(:family, :given, :suffix, :particle, :dropping_particle, :nick, :appellation, :title)
-              .join("\t") + other_column_data + "\n"
-        }"
-      }
+      source_names_tabbed_output = ""
     end
-  else
-    # parsed names somehow empty
-    n_empty_parsing_results_detected += 1
-    if develop_flag_show_parsed_source
-      cleaned_names_supplement_for_empty_parse_data = Array.new(dwc_agent_column_names.length, "\t").join("")
-      current_output_line+= cleaned_names_supplement_for_empty_parse_data + "\t" + this_row[column_names[0]] + "\t" + other_column_data + "\n"
-    else
-      current_output_line="" # empty current line completely
+    parsed_names = DwcAgent.parse(source_names.chomp) # chomp ~ mampfen
+    cleaned_names = parsed_names.map { |field| DwcAgent.clean(field) }
+    # cleaned_names array length is always 1
+    # length_current_output_line = current_output_line.length
+    
+    if has_additional_data_columns
+      column_names[1..].each do |field|
+        other_column_data_tabbed_output+= "\t" + this_row[field].chomp
+      end
     end
-    if develop_flag_write_logfile
-      current_logfile_line+= this_row[column_names[0]] + "\n"
+    
+    # check and loop through the parsed results
+    if cleaned_names.join("").length > 0 # one or more names in this_row
+      cleaned_names.each_with_index do |this_cleaned_name, i_name|
+        # this_cleaned_name here, is some kind of Namae object, try to check for empty parsing results
+        if this_cleaned_name.values_at(:family, :given, :suffix, :particle, :dropping_particle, :nick, :appellation, :title).join("").length > 0
+          current_output_line+= "#{
+            this_cleaned_name.values_at(:family, :given, :suffix, :particle, :dropping_particle, :nick, :appellation, :title)
+                .join("\t") + source_names_tabbed_output + other_column_data_tabbed_output + "\n"
+          }"
+        else # somehow empty parsed name
+          n_empty_parsing_results_detected += 1
+          if develop_flag_show_parsed_source 
+            # force output anyway if source_names is requested
+            cleaned_names_supplement_for_empty_parse_data = Array.new(dwc_agent_column_names.length, "\t").join("")
+            current_output_line+= cleaned_names_supplement_for_empty_parse_data + source_names_tabbed_output + other_column_data_tabbed_output + "\n"
+          end
+          if develop_flag_write_logfile
+            current_logfile_line+= source_names + "\n"
+          end
+        end
+      end
+    else # no parsed names at all in this_row for some reason
+      n_empty_parsing_results_detected += 1
+      if develop_flag_show_parsed_source 
+        # force output anyway if source_names is requested
+        cleaned_names_supplement_for_empty_parse_data = Array.new(dwc_agent_column_names.length, "\t").join("")
+        current_output_line+= cleaned_names_supplement_for_empty_parse_data + source_names_tabbed_output + other_column_data_tabbed_output + "\n"
+      else
+        current_output_line= "" # force line to be empty
+      end
+      if develop_flag_write_logfile
+        current_logfile_line+= source_names + "\n"
+      end      
     end
-  end
-  # print current_output_line, "\n"
-  File.open(
-    output_file_path,
-    i_input_line == 1 ? "w" : "a"
-  ) do |output_file|
-    output_file.puts current_output_line.chomp
-  end
 
+  end # if else i_input_line == 1
+
+  if i_input_line == 1 # always write the file
+    File.open( output_file_path, "w" ) do |output_file|
+        output_file.puts current_output_line.chomp
+    end
+  else 
+    if current_output_line.length > 0
+      # append text
+      File.open( output_file_path, "a" ) do |output_file|
+          output_file.puts current_output_line.chomp
+      end
+    end
+  end 
   
   if develop_flag_write_logfile
-    File.open(
-      log_file_path,
-      i_input_line == 1 ? "w" : "a"
-    ) do |this_log_file|
-      this_log_file.puts current_logfile_line.chomp
+    if i_input_line == 1 # always write the file
+      File.open( log_file_path, "w" ) do |this_log_file|
+        this_log_file.puts current_logfile_line.chomp
+      end
+    else
+      if current_logfile_line.length > 0
+        # append text
+        File.open( log_file_path, "a" ) do |this_log_file|
+          this_log_file.puts current_logfile_line.chomp
+        end
+      end
     end
   end
   # break  if i_input_line > 20
