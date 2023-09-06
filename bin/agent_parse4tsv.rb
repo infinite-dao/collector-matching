@@ -18,10 +18,12 @@ dwc_agent_column_names = ["family", "given", "suffix", "particle", "dropping_par
 
 develop_flag_show_parsed_source = false
 column_name_source_data = "source_data"
+supplementary_developer_info_column_names = ["parsed_names", "cleaned_names"]
 
 develop_flag_write_logfile = false
 log_file_name = File.basename(output_file_path + ".log")
 log_file_path = output_file_path + ".log"
+log_file_column_names = ["source_data", "parsed_names", "cleaned_names", "name_index_of_empty_result"]
 
 require 'optparse'
 
@@ -63,15 +65,15 @@ log_file_path = output_file_path + ".log"
 
 printf "We read tabulator separated input data and parse the names (from the 1st column)\n"
 printf "The text data must have a column header; if there are any other columns,\nthey will be added to the parsed output.\n"
-printf "\nUse --logfile or --develop to check for empty parsing results.\nBy default empty parsing results get removed from the output.\n"
+printf "\nUse --logfile or --develop to log empty names or check full parsing results.\nBy default empty parsing results will completely be removed from the output.\n"
 printf "\nNow:\n"
 printf "- read data from \033[0;34m" + input_file_path + "\033[0m\n"
 printf "- write data to  \033[0;34m" + output_file_path + "\033[0m\n"
 if develop_flag_show_parsed_source
-printf "- add column \033[0;34m" + column_name_source_data + "\033[0m e.g. for a \033[0;33mdeveloper report\033[0m\n"
+printf "- add columns \033[0;34m" + sprintf("%s, %s", column_name_source_data, supplementary_developer_info_column_names.join(", ")) + "\033[0m e.g. for a \033[0;33mdeveloper report\033[0m\n"
 end
 if develop_flag_write_logfile
-printf "- write log of skipped names into output directory as well: \033[0;34m" + log_file_name + "\033[0m\n"
+printf "- write log (with tabbed columns) of skipped names into output directory as well: \033[0;34m" + log_file_name + "\033[0m\n"
 end
 
 
@@ -115,6 +117,8 @@ this_tsv.parse do |this_row|
   i_input_line+=1; 
   current_output_line=""; 
   current_logfile_line="";
+  source_names_tabbed_output = ""
+  supplementary_developer_info_tabbed_output = ""
   column_names = this_row.keys;
 
   has_additional_data_columns=0
@@ -128,49 +132,56 @@ this_tsv.parse do |this_row|
     # add header output
     current_output_line += dwc_agent_column_names.join("\t")
     if develop_flag_show_parsed_source
-      current_output_line += "\t" + column_name_source_data      
+      # TODO add supplementary_developer_info_column_names adjacent to source_data
+      current_output_line += "\t" + column_name_source_data + "\t" + supplementary_developer_info_column_names.join("\t")
     end
     if has_additional_data_columns
       current_output_line += "\t" + column_names[1..].join("\t")
     end
     current_output_line +="\n"
+    
   else # other (real) data lines
     # prepare data row
-    source_names = this_row[column_names[0]]
-    if develop_flag_show_parsed_source
-      source_names_tabbed_output = "\t" + source_names # it gets inserted, hence the \t prefix
-    else
-      source_names_tabbed_output = ""
-    end
-    parsed_names = DwcAgent.parse(source_names.chomp) # chomp ~ mampfen
-    cleaned_names = parsed_names.map { |field| DwcAgent.clean(field) }
-    # cleaned_names array length is always 1
-    # length_current_output_line = current_output_line.length
-    
     if has_additional_data_columns
       column_names[1..].each do |field|
         other_column_data_tabbed_output+= "\t" + this_row[field].chomp
       end
     end
+    source_names = this_row[column_names[0]]
+    
+    parsed_names = DwcAgent.parse(source_names.chomp) # chomp ~ mampfen
+    cleaned_names = parsed_names.map { |field| DwcAgent.clean(field) }
+    # cleaned_names array length is always 1
+    # length_current_output_line = current_output_line.length
+    
+    if develop_flag_show_parsed_source
+      source_names_tabbed_output = "\t" + source_names # it gets inserted, hence the \t prefix
+    end
+    supplementary_developer_info_tabbed_output = "\tparsed:" + parsed_names.join("<SEP>") + "\tcleaned:" + cleaned_names.join("<SEP>")
+    
+    # TODO Gabrielian,E.Tz., Hein,P. & Raab-Straube,E. von VHde Data fälschlich als empty ausgegeben!! Prüfen
+    # puts sprintf("debug: row: %d parsed %s", i_input_line, parsed_names.join("<SEP>"))
     
     # check and loop through the parsed results
-    if cleaned_names.join("").length > 0 # one or more names in this_row
+    
+    # if cleaned_names.join("").length > 0 # one or more names in this_row
+    if parsed_names.join("").length > 0
       cleaned_names.each_with_index do |this_cleaned_name, i_name|
         # this_cleaned_name here, is some kind of Namae object, try to check for empty parsing results
         if this_cleaned_name.values_at(:family, :given, :suffix, :particle, :dropping_particle, :nick, :appellation, :title).join("").length > 0
           current_output_line+= "#{
             this_cleaned_name.values_at(:family, :given, :suffix, :particle, :dropping_particle, :nick, :appellation, :title)
-                .join("\t") + source_names_tabbed_output + other_column_data_tabbed_output + "\n"
+                .join("\t") + source_names_tabbed_output + supplementary_developer_info_tabbed_output + other_column_data_tabbed_output + "\n"
           }"
         else # somehow empty parsed name
           n_empty_parsing_results_detected += 1
           if develop_flag_show_parsed_source 
             # force output anyway if source_names is requested
             cleaned_names_supplement_for_empty_parse_data = Array.new(dwc_agent_column_names.length, "\t").join("")
-            current_output_line+= cleaned_names_supplement_for_empty_parse_data + source_names_tabbed_output + other_column_data_tabbed_output + "\n"
+            current_output_line+= cleaned_names_supplement_for_empty_parse_data + source_names_tabbed_output + supplementary_developer_info_tabbed_output + other_column_data_tabbed_output + "\n"
           end
           if develop_flag_write_logfile
-            current_logfile_line+= source_names + "\n"
+            current_logfile_line+= sprintf("%s%s\tcleaned_index0:%d\n", source_names, supplementary_developer_info_tabbed_output, i_name)
           end
         end
       end
@@ -179,15 +190,17 @@ this_tsv.parse do |this_row|
       if develop_flag_show_parsed_source 
         # force output anyway if source_names is requested
         cleaned_names_supplement_for_empty_parse_data = Array.new(dwc_agent_column_names.length, "\t").join("")
-        current_output_line+= cleaned_names_supplement_for_empty_parse_data + source_names_tabbed_output + other_column_data_tabbed_output + "\n"
+        current_output_line+= cleaned_names_supplement_for_empty_parse_data + source_names_tabbed_output + supplementary_developer_info_tabbed_output + other_column_data_tabbed_output + "\n"
       else
         current_output_line= "" # force line to be empty
       end
       if develop_flag_write_logfile
-        current_logfile_line+= source_names + "\n"
+        current_logfile_line+= sprintf("%s%s\tcleaned_index0:%d\n", source_names, supplementary_developer_info_tabbed_output, 0)
       end      
     end
 
+  # debug
+    
   end # if else i_input_line == 1
 
   if i_input_line == 1 # always write the file
@@ -205,6 +218,7 @@ this_tsv.parse do |this_row|
   
   if develop_flag_write_logfile
     if i_input_line == 1 # always write the file
+      current_logfile_line+= log_file_column_names.join("\t") # + "\n"
       File.open( log_file_path, "w" ) do |this_log_file|
         this_log_file.puts current_logfile_line.chomp
       end
