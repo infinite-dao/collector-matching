@@ -37,7 +37,7 @@ time ruby agent_parse4tsv.rb --logfile \
   # We have 64381 empty parsing results detected.
   #   You can also use --develop to get a full result table including the used source data of each parsed line
   # Wrote log file of skipped names to
-  #   ../data/Meise_doi-10.15468-dl.ax9zkh/occurrence_recordedBy_eventDate_occurrenceIDs_20230830_parsed.tsv.log
+  #   ../data/Meise_doi-10.15468-dl.ax9zkh/occurrence_recordedBy_eventDate_occurrenceIDs_20230830_parsed.tsv_dwcagent_3.0.8.0.log
   # Wrote data to
   #   ../data/Meise_doi-10.15468-dl.ax9zkh/occurrence_recordedBy_eventDate_occurrenceIDs_20230830_parsed.tsv
   # -------------------------

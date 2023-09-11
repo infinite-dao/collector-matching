@@ -9,25 +9,25 @@ Here we gathered tools to assist the name matching of (biological) collector nam
 ## Getting Data
 
 WikiData:
-- [`create_wikidata_datasets_botanists.ipynb`](./create_wikidata_datasets_botanists.ipynb) – to get data of botanists from WikiData
+- [`create_wikidata_datasets_botanists.ipynb`](./create_wikidata_datasets_botanists.ipynb)—to get data of botanists from WikiData
 
 BGBM example:
-- [`create_bgbm_gbif-occurrence_collectors_dataset.ipynb`](./create_bgbm_gbif-occurrence_collectors_dataset.ipynb) – create an example data set from GIBF (*Virtual Herbarium Germany* (BGBM) <https://doi.org/10.15468/dl.tued2e>)
-- [`create_bgbm_gbif-occurrence_collectors_eventDate_dataset.ipynb`](./create_bgbm_gbif-occurrence_collectors_eventDate_dataset.ipynb) – create an example data set with collection date (`eventDate`) from GIBF (*Virtual Herbarium Germany* (BGBM) <https://doi.org/10.15468/dl.tued2e>)
+- [`create_bgbm_gbif-occurrence_collectors_dataset.ipynb`](./create_bgbm_gbif-occurrence_collectors_dataset.ipynb)—create an example data set from GIBF (*Virtual Herbarium Germany* (BGBM) <https://doi.org/10.15468/dl.tued2e>)
+- [`create_bgbm_gbif-occurrence_collectors_eventDate_dataset.ipynb`](./create_bgbm_gbif-occurrence_collectors_eventDate_dataset.ipynb)—create an example data set with collection date (`eventDate`) from GIBF (*Virtual Herbarium Germany* (BGBM) <https://doi.org/10.15468/dl.tued2e>)
 
 Meise example:
-- [`create_meise_gbif-occurrence_collectors_eventDate_dataset.ipynb`](./create_meise_gbif-occurrence_collectors_eventDate_dataset.ipynb) – create an example data set with collection date (`eventDate`) from GIBF (*Meise Botanic Garden Herbarium* <https://doi.org/10.15468/dl.ax9zkh>)
+- [`create_meise_gbif-occurrence_collectors_eventDate_dataset.ipynb`](./create_meise_gbif-occurrence_collectors_eventDate_dataset.ipynb)—create an example data set with collection date (`eventDate`) from GIBF (*Meise Botanic Garden Herbarium* <https://doi.org/10.15468/dl.ax9zkh>)
 
 
 Plazi example:
-- [`create_plazi_collectors_dataset.ipynb`](./create_plazi_collectors_dataset.ipynb) – create only data from Plazi‘s Collection Statistics “Materials Citation Data” (<https://tb.plazi.org/GgServer/srsStats>)
+- [`create_plazi_collectors_dataset.ipynb`](./create_plazi_collectors_dataset.ipynb)—create only data from Plazi‘s Collection Statistics “Materials Citation Data” (<https://tb.plazi.org/GgServer/srsStats>)
 
 ## Matching of Names
 
-- [`match_names_BGBM-dwcagent-parsed_vs_WikiData_k-nearest.ipynb`](./match_names_BGBM-dwcagent-parsed_vs_WikiData_k-nearest.ipynb) – performing a name matching of parsed collector names (from own source data) to WikiData botanist names
-- [`match_names_BGBM-dwcagent-parsed-eventDate_vs_WikiData_k-nearest.ipynb`](./match_names_BGBM-dwcagent-parsed-eventDate_vs_WikiData_k-nearest.ipynb) – performing a name matching of parsed collector names including eventDate (=date of sampling event)
-- [`match_names_BGBM-dwcagent-parsed_vs_WikiData_cosine-similarity.ipynb`](./match_names_BGBM-dwcagent-parsed_vs_WikiData_cosine-similarity.ipynb) – performing a name matching using cosine-similarity of parsed collector names (from own source data) to WikiData botanist names
-- [`create_and_match_plazi_collectors_dataset.ipynb`](./create_and_match_plazi_collectors_dataset.ipynb) – create and match data from Plazi‘s Collection Statistics “Materials Citation Data” (<https://tb.plazi.org/GgServer/srsStats>)
+- [`match_names_BGBM-dwcagent-parsed_vs_WikiData_k-nearest.ipynb`](./match_names_BGBM-dwcagent-parsed_vs_WikiData_k-nearest.ipynb)—performing a name matching of parsed collector names (from own source data) to WikiData botanist names
+- [`match_names_BGBM-dwcagent-parsed-eventDate_vs_WikiData_k-nearest.ipynb`](./match_names_BGBM-dwcagent-parsed-eventDate_vs_WikiData_k-nearest.ipynb)—performing a name matching of parsed collector names including eventDate (=date of sampling event)
+- [`match_names_BGBM-dwcagent-parsed_vs_WikiData_cosine-similarity.ipynb`](./match_names_BGBM-dwcagent-parsed_vs_WikiData_cosine-similarity.ipynb)—performing a name matching using cosine-similarity of parsed collector names (from own source data) to WikiData botanist names
+- [`create_and_match_plazi_collectors_dataset.ipynb`](./create_and_match_plazi_collectors_dataset.ipynb)—create and match data from Plazi‘s Collection Statistics “Materials Citation Data” (<https://tb.plazi.org/GgServer/srsStats>)
 
 ## Parsing of Name Lists
 

@@ -4,6 +4,7 @@
 
 # test the time usage in BASH/Unix by: `time ruby agent_parse.rb `
 require 'dwc_agent' # installation see https://libraries.io/rubygems/dwc_agent
+dwcagent_version=DwcAgent::Version.version
 
 # TODO missing values with `dwcagent "ABR"` returns [] — now resulting in empty lines
 # TODO some names become divided into 2 entries or data get deleted partially
@@ -21,15 +22,19 @@ column_name_source_data = "source_data"
 supplementary_developer_info_column_names = ["parsed_names", "cleaned_names"]
 
 develop_flag_write_logfile = false
-log_file_name = File.basename(output_file_path + ".log")
-log_file_path = output_file_path + ".log"
-log_file_column_names = ["source_data", "parsed_names", "cleaned_names", "name_index_of_empty_result"]
+log_file_path = sprintf("%s_dwcagent_%s.log", output_file_path, dwcagent_version)
+log_file_name = File.basename(log_file_path)
+# log_file_path = output_file_path + ".log"
+log_file_column_names = ["source_data", "related_parsed_name", "parsed_names", "cleaned_names", "cleaned_index_name_of_empty_result"]
 
 require 'optparse'
+
+
 
 options = {}
 OptionParser.new do |opt|
   opt.banner = "Usage: ruby agent_parse4tsv.rb [options]\n" \
+      + "  (version of dwc_agent: \033[0;34m" + dwcagent_version + "\033[0m)\n" \
       + "\n" \
       + "  We read tabulator separated input data and parse the names (from the 1st column)\n" \
       + "  The text data must have a column header; if there are any other columns, they will be added to the parsed output.\n" \
@@ -60,8 +65,11 @@ output_file_path = options[:output]
 develop_flag_show_parsed_source = options[:developer_report]
 develop_flag_write_logfile = options[:do_log_report]
 
-log_file_name = File.basename(output_file_path + ".log")
-log_file_path = output_file_path + ".log"
+# log_file_name = File.basename(output_file_path + ".log")
+# log_file_path = output_file_path + ".log"
+log_file_path = sprintf("%s_dwcagent_%s.log", output_file_path, dwcagent_version)
+log_file_name = File.basename(log_file_path)
+# log_file_path = output_file_path + ".log"
 
 printf "We read tabulator separated input data and parse the names (from the 1st column)\n"
 printf "The text data must have a column header; if there are any other columns,\nthey will be added to the parsed output.\n"
@@ -73,7 +81,7 @@ if develop_flag_show_parsed_source
 printf "- add columns \033[0;34m" + sprintf("%s, %s", column_name_source_data, supplementary_developer_info_column_names.join(", ")) + "\033[0m e.g. for a \033[0;33mdeveloper report\033[0m\n"
 end
 if develop_flag_write_logfile
-printf "- write log (with tabbed columns) of skipped names into output directory as well: \033[0;34m" + log_file_name + "\033[0m\n"
+printf "- write log (with tabbed columns) of skipped names into output directory as well:\n  \033[0;34m" + log_file_name + "\033[0m\n"
 end
 
 
@@ -169,11 +177,19 @@ this_tsv.parse do |this_row|
       cleaned_names.each_with_index do |this_cleaned_name, i_name|
         # this_cleaned_name here, is some kind of Namae object, try to check for empty parsing results
         if this_cleaned_name.values_at(:family, :given, :suffix, :particle, :dropping_particle, :nick, :appellation, :title).join("").length > 0
+          if develop_flag_show_parsed_source
           current_output_line+= "#{
             this_cleaned_name.values_at(:family, :given, :suffix, :particle, :dropping_particle, :nick, :appellation, :title)
                 .join("\t") + source_names_tabbed_output + supplementary_developer_info_tabbed_output + other_column_data_tabbed_output + "\n"
           }"
+          else
+          current_output_line+= "#{
+            this_cleaned_name.values_at(:family, :given, :suffix, :particle, :dropping_particle, :nick, :appellation, :title)
+                .join("\t") + other_column_data_tabbed_output + "\n"
+          }"
+          end
         else # somehow empty parsed name
+          # TODO if this_cleaned_name == "" perhaps use the parsed name instead?
           n_empty_parsing_results_detected += 1
           if develop_flag_show_parsed_source 
             # force output anyway if source_names is requested
@@ -181,7 +197,12 @@ this_tsv.parse do |this_row|
             current_output_line+= cleaned_names_supplement_for_empty_parse_data + source_names_tabbed_output + supplementary_developer_info_tabbed_output + other_column_data_tabbed_output + "\n"
           end
           if develop_flag_write_logfile
-            current_logfile_line+= sprintf("%s%s\tcleaned_index0:%d\n", source_names, supplementary_developer_info_tabbed_output, i_name)
+            current_logfile_line+=sprintf("%s", source_names)
+            current_logfile_line+=sprintf("\t%s", parsed_names[i_name])
+            current_logfile_line+=sprintf("%s\tcleaned_0index:%d", supplementary_developer_info_tabbed_output, i_name)
+            current_logfile_line=current_logfile_line.gsub(/\tparsed:\t/,"\t\t").gsub(/\tcleaned:\t/, "\t\t")
+            current_logfile_line+=sprintf("\n")
+            
           end
         end
       end
@@ -195,7 +216,11 @@ this_tsv.parse do |this_row|
         current_output_line= "" # force line to be empty
       end
       if develop_flag_write_logfile
-        current_logfile_line+= sprintf("%s%s\tcleaned_index0:%d\n", source_names, supplementary_developer_info_tabbed_output, 0)
+        current_logfile_line+=sprintf("%s", source_names)
+        current_logfile_line+=sprintf("\t%s", parsed_names[0])
+        current_logfile_line+=sprintf("%s\tcleaned_0index:%d", supplementary_developer_info_tabbed_output, 0)
+        current_logfile_line=current_logfile_line.gsub(/\tparsed:\t/,"\t\t").gsub(/\tcleaned:\t/, "\t\t")
+        current_logfile_line+=sprintf("\n")
       end      
     end
 
