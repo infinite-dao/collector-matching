@@ -52,13 +52,13 @@ Analyse the logged parsed names and write a markdown table output:
 
 ```bash
 cd ../data/Meise_doi-10.15468-dl.ax9zkh/
-file="occurrence_recordedBy_eventDate_occurrenceIDs_20230830_parsed.tsv_dwcagent_3.0.9.0.log";
+file="occurrence_recordedBy_eventDate_occurrenceIDs_20230830_parsed.tsv_dwcagent_3.0.10.0.log";
 awk --field-separator=$'\t' '
   BEGIN { 
     print "| related_parsed_name | after cleaning empty | source string | comment |\n|  --- | --- | --- | --- |" 
   } 
   { 
-    if ($2) { 
+    if ($2 && FNR > 1) { 
       print "| `" $2 "` | at " $5 " | `" $1 "` |   | " 
     } 
   }' "${file}" \

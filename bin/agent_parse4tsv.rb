@@ -15,6 +15,8 @@ dwcagent_version=DwcAgent::Version.version
 input_file_path = 'data/VHde_doi-10.15468-dl.tued2e/occurrence_recordedBy_occurrenceIDs_20230524.tsv'
 output_file_path = 'data/VHde_doi-10.15468-dl.tued2e/occurrence_recordedBy_occurrenceIDs_20230524_parsed.tsv'
 
+parsing_level_on_empty_cleaning = 0
+
 dwc_agent_column_names = ["family", "given", "suffix", "particle", "dropping_particle", "nick", "appellation", "title"]
 
 develop_flag_show_parsed_source = false
@@ -43,13 +45,15 @@ OptionParser.new do |opt|
       + "\nOptions: \n"
   opt.on('-i [input]', '--input', 'file and path of the input data (tsv)') { |o| options[:input] = o }
   opt.on('-o [output]', '--output', 'file and path of the output (tsv)') { |o| options[:output] = o }
-  opt.on('-d', '--develop', 'show parsed source strings anyway (extra column)') { |o| options[:developer_report] = o }
+  opt.on('-d', '--develop', 'show parsed source strings anyway (extra column)') { |o| options[:do_developer_report] = o }
+  opt.on('-p [level]', '--parsing-level', Integer, 'level of parsing: 0 = clean names (default); 1 = on empty cleaned name use the parsed name; 2 = only do parsing, no cleaning') { |o| options[:parsing_level] = o }
   opt.on('-l', '--logfile', 'write log file with skipped names (into the output directory)') { |o| options[:do_log_report] = o }
   options = { 
     input: input_file_path, 
     output: output_file_path, 
-    developer_report: develop_flag_show_parsed_source, 
-    do_log_report: develop_flag_write_logfile
+    do_developer_report: develop_flag_show_parsed_source, 
+    do_log_report: develop_flag_write_logfile,
+    parsing_level: parsing_level_on_empty_cleaning
   }
   opt.parse!(into: options)
 end.parse!
@@ -62,8 +66,12 @@ abort("\033[0;33mInput data not found\033[0m (STOP. Change the input file path i
 # # # # # # main code # # # # # #
 input_file_path = options[:input]
 output_file_path = options[:output]
-develop_flag_show_parsed_source = options[:developer_report]
+develop_flag_show_parsed_source = options[:do_developer_report]
 develop_flag_write_logfile = options[:do_log_report]
+
+if options[:parsing_level].between?(0,2)
+parsing_level_on_empty_cleaning = options[:parsing_level]
+end
 
 # log_file_name = File.basename(output_file_path + ".log")
 # log_file_path = output_file_path + ".log"
@@ -75,6 +83,13 @@ printf "We read tabulator separated input data and parse the names (from the 1st
 printf "The text data must have a column header; if there are any other columns,\nthey will be added to the parsed output.\n"
 printf "\nUse --logfile or --develop to log empty names or check full parsing results.\nBy default empty parsing results will completely be removed from the output.\n"
 printf "\nNow:\n"
+if parsing_level_on_empty_cleaning == 1
+printf "- use the parsed name on empty cleaning result (TODO: check results)\n"
+  elsif parsing_level_on_empty_cleaning == 2
+printf "- use only parsing of data (no cleaning; TODO: check results)\n"
+else
+printf "- use cleaning of parsed name data\n"
+end
 printf "- read data from \033[0;34m" + input_file_path + "\033[0m\n"
 printf "- write data to  \033[0;34m" + output_file_path + "\033[0m\n"
 if develop_flag_show_parsed_source
@@ -110,6 +125,12 @@ class StrictTsv
   end
 end
 
+# def return_parsed_or_cleaned_data(parse_data, clean_data, this_parsing_level)
+#   if this_parsing_level == 1
+#     elsif this_parsing_level == 2
+#   else
+#   end
+# end
 
 n_empty_parsing_results_detected = 0
 i_input_line = 0
@@ -178,23 +199,39 @@ this_tsv.parse do |this_row|
         # this_cleaned_name here, is some kind of Namae object, try to check for empty parsing results
         if this_cleaned_name.values_at(:family, :given, :suffix, :particle, :dropping_particle, :nick, :appellation, :title).join("").length > 0
           if develop_flag_show_parsed_source
-          current_output_line+= "#{
-            this_cleaned_name.values_at(:family, :given, :suffix, :particle, :dropping_particle, :nick, :appellation, :title)
-                .join("\t") + source_names_tabbed_output + supplementary_developer_info_tabbed_output + other_column_data_tabbed_output + "\n"
-          }"
+            # ignore parsing_level_on_empty_cleaning completely
+            current_output_line+= "#{
+              this_cleaned_name.values_at(:family, :given, :suffix, :particle, :dropping_particle, :nick, :appellation, :title)
+                  .join("\t") + source_names_tabbed_output + supplementary_developer_info_tabbed_output + other_column_data_tabbed_output + "\n"
+            }"
           else
-          current_output_line+= "#{
-            this_cleaned_name.values_at(:family, :given, :suffix, :particle, :dropping_particle, :nick, :appellation, :title)
-                .join("\t") + other_column_data_tabbed_output + "\n"
-          }"
+            if parsing_level_on_empty_cleaning == 2
+              current_output_line+= "#{
+                parsed_names[i_name].values_at(:family, :given, :suffix, :particle, :dropping_particle, :nick, :appellation, :title)
+                    .join("\t") + other_column_data_tabbed_output + "\n"
+              }"
+            else            
+              current_output_line+= "#{
+                this_cleaned_name.values_at(:family, :given, :suffix, :particle, :dropping_particle, :nick, :appellation, :title)
+                    .join("\t") + other_column_data_tabbed_output + "\n"
+              }"
+            end
           end
-        else # somehow empty parsed name
+        else # somehow empty cleaned parsed name
           # TODO if this_cleaned_name == "" perhaps use the parsed name instead?
           n_empty_parsing_results_detected += 1
           if develop_flag_show_parsed_source 
+            # ignore parsing_level_on_empty_cleaning completely
             # force output anyway if source_names is requested
             cleaned_names_supplement_for_empty_parse_data = Array.new(dwc_agent_column_names.length, "\t").join("")
             current_output_line+= cleaned_names_supplement_for_empty_parse_data + source_names_tabbed_output + supplementary_developer_info_tabbed_output + other_column_data_tabbed_output + "\n"
+          else
+            if parsing_level_on_empty_cleaning.between?(1,2)
+              current_output_line+= "#{
+                parsed_names[i_name].values_at(:family, :given, :suffix, :particle, :dropping_particle, :nick, :appellation, :title)
+                    .join("\t") + other_column_data_tabbed_output + "\n"
+              }"
+            end
           end
           if develop_flag_write_logfile
             current_logfile_line+=sprintf("%s", source_names)
@@ -205,7 +242,7 @@ this_tsv.parse do |this_row|
             
           end
         end
-      end
+      end # cleaned_names
     else # no parsed names at all in this_row for some reason
       n_empty_parsing_results_detected += 1
       if develop_flag_show_parsed_source 
@@ -263,7 +300,7 @@ end
 printf "-------------------------\n"
 printf "\033[0;32mDone.\033[0m\n"
 if n_empty_parsing_results_detected > 0
-printf("We have \033[0;34m%d\033[0m empty parsing results detected.\n", n_empty_parsing_results_detected)
+printf("We have \033[0;34m%d\033[0m empty parsing cleaned results detected.\n", n_empty_parsing_results_detected)
   if develop_flag_write_logfile && develop_flag_show_parsed_source
     printf "  Wrote logfile and full data results (including empty parsing)\n"
   elsif develop_flag_write_logfile
