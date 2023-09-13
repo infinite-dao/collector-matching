@@ -18,6 +18,8 @@ BGBM example:
 Meise example:
 - [`create_meise_gbif-occurrence_collectors_eventDate_dataset.ipynb`](./create_meise_gbif-occurrence_collectors_eventDate_dataset.ipynb)—create an example data set with collection date (`eventDate`) from GIBF (*Meise Botanic Garden Herbarium* <https://doi.org/10.15468/dl.ax9zkh>)
 
+Naturalis example:
+- [`create_naturalis_gbif-occurrence_collectors_eventDate_dataset.ipynb`](./create_naturalis_gbif-occurrence_collectors_eventDate_dataset.ipynb)—create an example data set with collection date (`eventDate`) from GIBF (*Naturalis Biodiversity Center (NL) - Botany* <https://doi.org/10.15468/dl.uw8rxk>)
 
 Plazi example:
 - [`create_plazi_collectors_dataset.ipynb`](./create_plazi_collectors_dataset.ipynb)—create only data from Plazi‘s Collection Statistics “Materials Citation Data” (<https://tb.plazi.org/GgServer/srsStats>)
