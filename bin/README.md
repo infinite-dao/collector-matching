@@ -26,6 +26,8 @@ time ruby agent_parse4tsv.rb \
   # sys     2m4,709s
 ```
 
+### Analyse and Look Into the Parsed Names
+
 You can use `--logfile` to get a list of skipped names as well (here in combination of measuring the script time):
 
 ```bash
@@ -44,4 +46,31 @@ time ruby agent_parse4tsv.rb --logfile \
   # real    1m17,880s
   # user    0m40,357s
   # sys     0m24,719s
+```
+
+Analyse the logged parsed names and write a markdown table output:
+
+```bash
+cd ../data/Meise_doi-10.15468-dl.ax9zkh/
+file="occurrence_recordedBy_eventDate_occurrenceIDs_20230830_parsed.tsv_dwcagent_3.0.9.0.log";
+awk --field-separator=$'\t' '
+  BEGIN { 
+    print "| related_parsed_name | after cleaning empty | source string | comment |\n|  --- | --- | --- | --- |" 
+  } 
+  { 
+    if ($2) { 
+      print "| `" $2 "` | at " $5 " | `" $1 "` |   | " 
+    } 
+  }' "${file}" \
+  | column --output-separator '|'  --table --separator '|' \
+  > skipped_names.md
+
+# format nicer looking markdown table in general
+cat skipped_names.md | column --output-separator '|'  --table --separator '|'
+# | related_parsed_name | after cleaning empty | source string         | comment |
+# |  ---                | ---                  | ---                   | ---     |
+# | `J. B.`             | at cleaned_0index:0  | `? J. B.`             |         | 
+# | `F.M.C. V.`         | at cleaned_0index:0  | `?F.M.C. V.`          |         | 
+# | `Jean Malvaux sc.`  | at cleaned_0index:0  | `?Jean Malvaux sc.`   |         | 
+# | `B. K.`             | at cleaned_0index:1  | `?P.E.G. & B. K.`     |         | 
 ```

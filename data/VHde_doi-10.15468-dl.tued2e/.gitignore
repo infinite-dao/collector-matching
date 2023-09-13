@@ -1,3 +1,7 @@
 # ignore to large files files
 
 occurrence.txt
+
+skipped_names*
+
+test_*
