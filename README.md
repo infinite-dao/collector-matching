@@ -30,9 +30,10 @@ BGBM examples
 - [`match_names_BGBM-dwcagent-parsed-eventDate_vs_WikiData_k-nearest.ipynb`](./match_names_BGBM-dwcagent-parsed-eventDate_vs_WikiData_k-nearest.ipynb)—performing a name matching of parsed collector names including eventDate (=date of sampling event)
 - [`match_names_BGBM-dwcagent-parsed_vs_WikiData_cosine-similarity.ipynb`](./match_names_BGBM-dwcagent-parsed_vs_WikiData_cosine-similarity.ipynb)—performing a name matching using cosine-similarity of parsed collector names (from own source data) to WikiData botanist names
 
-Meise example
+Meise examples
 
 - [`match_names_Meise-dwcagent-parsed-eventDate_vs_WikiData_k-nearest.ipynb`](./match_names_Meise-dwcagent-parsed-eventDate_vs_WikiData_k-nearest.ipynb)—performing a name matching of parsed collector names including eventDate (=date of sampling event)
+- [`match_names_Meise-dwcagent-parsed-eventDate_vs_WikiData_cosine-similarity.ipynb`](./match_names_Meise-dwcagent-parsed-eventDate_vs_WikiData_cosine-similarity.ipynb)—performing a name matching using cosine-similarity of parsed collector names (from own source data) to WikiData botanist names including eventDate (=date of sampling event)
 
 
 Plazi example
