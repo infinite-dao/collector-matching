@@ -39,7 +39,7 @@ time ruby agent_parse4tsv.rb --logfile \
   # We have 64381 empty parsing results detected.
   #   You can also use --develop to get a full result table including the used source data of each parsed line
   # Wrote log file of skipped names to
-  #   ../data/Meise_doi-10.15468-dl.ax9zkh/occurrence_recordedBy_eventDate_occurrenceIDs_20230830_parsed.tsv_dwcagent_3.0.8.0.log
+  #   ../data/Meise_doi-10.15468-dl.ax9zkh/occurrence_recordedBy_eventDate_occurrenceIDs_20230830_parsed.tsv_dwcagent_3.0.12.0.log
   # Wrote data to
   #   ../data/Meise_doi-10.15468-dl.ax9zkh/occurrence_recordedBy_eventDate_occurrenceIDs_20230830_parsed.tsv
   # -------------------------
@@ -52,7 +52,7 @@ Analyse the logged parsed names and write a markdown table output:
 
 ```bash
 cd ../data/Meise_doi-10.15468-dl.ax9zkh/
-file="occurrence_recordedBy_eventDate_occurrenceIDs_20230830_parsed.tsv_dwcagent_3.0.10.0.log";
+file="occurrence_recordedBy_eventDate_occurrenceIDs_20230830_parsed.tsv_dwcagent_3.0.12.0.log";
 awk --field-separator=$'\t' '
   BEGIN { 
     print "| related_parsed_name | after cleaning empty | source string | comment |\n|  --- | --- | --- | --- |" 
@@ -74,3 +74,7 @@ cat skipped_names.md | column --output-separator '|'  --table --separator '|'
 # | `Jean Malvaux sc.`  | at cleaned_0index:0  | `?Jean Malvaux sc.`   |         | 
 # | `B. K.`             | at cleaned_0index:1  | `?P.E.G. & B. K.`     |         | 
 ```
+
+### Convert CSV Data to TSV
+
+Use `csv2tsv.py filename.csv` and it will convert it to `filename.csv.tsv` having tabbed separated columns.
