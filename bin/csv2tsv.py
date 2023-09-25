@@ -17,7 +17,7 @@ try:
             (this_output_file, os.path.getsize(this_output_file) >> 10 ) # 10000 >> 10 = bitshift operator, to get kilo bytes (10-bits=>1024)
         )
     else:
-        print("File %s not found...")
+        print("File %s not found..." % this_csv_file)
         raise SystemExit(f"Usage: {sys.argv[0]} <CSV-file-to-convert>")
     
 except IndexError:
