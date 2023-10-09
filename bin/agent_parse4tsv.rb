@@ -223,7 +223,8 @@ this_tsv.parse do |this_row|
           if develop_flag_show_parsed_source 
             # ignore parsing_level_on_empty_cleaning completely
             # force output anyway if source_names is requested
-            cleaned_names_supplement_for_empty_parse_data = Array.new(dwc_agent_column_names.length, "\t").join("")
+            # cleaned_names_supplement_for_empty_parse_data = Array.new(dwc_agent_column_names.length, "\t").join("")
+            cleaned_names_supplement_for_empty_parse_data = Array.new(dwc_agent_column_names.length).join("\t")
             current_output_line+= cleaned_names_supplement_for_empty_parse_data + source_names_tabbed_output + supplementary_developer_info_tabbed_output + other_column_data_tabbed_output + "\n"
           else
             if parsing_level_on_empty_cleaning.between?(1,2)
@@ -247,7 +248,7 @@ this_tsv.parse do |this_row|
       n_empty_parsing_results_detected += 1
       if develop_flag_show_parsed_source 
         # force output anyway if source_names is requested
-        cleaned_names_supplement_for_empty_parse_data = Array.new(dwc_agent_column_names.length, "\t").join("")
+        cleaned_names_supplement_for_empty_parse_data = Array.new(dwc_agent_column_names.length).join("\t")
         current_output_line+= cleaned_names_supplement_for_empty_parse_data + source_names_tabbed_output + supplementary_developer_info_tabbed_output + other_column_data_tabbed_output + "\n"
       else
         current_output_line= "" # force line to be empty
