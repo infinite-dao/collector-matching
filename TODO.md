@@ -1,3 +1,4 @@
+# Results
 
 Provide a result table similar to the following one:
 
@@ -14,3 +15,6 @@ Provide a result table similar to the following one:
 | 144827673 | http://www.wikidata.org/entity/Q68637   | collected | Person    | wikidata            | https://herbarium.bgbm.org/object/B100217310 | 1932-06-07    | 1932-06-07  | Bornmüller,J.F.N. | Joseph Friedrich Nicolaus Bornmüller  |
  
 For attribution see TDWG Attribution Interest Group, e.g. <https://github.com/tdwg/attribution/blob/master/documents/RDA_technical_examples.md>.
+
+# Analysis
+
