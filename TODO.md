@@ -18,3 +18,6 @@ For attribution see TDWG Attribution Interest Group, e.g. <https://github.com/td
 
 # Analysis
 
+# Adding DarwinCore attribution CSV
+
+- in progress see [match_names_Meise-dwcagent-parsed-eventDate_vs_WikiData_cosine-similarity.ipynb](match_names_Meise-dwcagent-parsed-eventDate_vs_WikiData_cosine-similarity.ipynb)

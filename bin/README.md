@@ -75,6 +75,36 @@ cat skipped_names.md | column --output-separator '|'  --table --separator '|'
 # | `B. K.`             | at cleaned_0index:1  | `?P.E.G. & B. K.`     |         | 
 ```
 
+#### Get names with `[]`
+
+We use `--develop` to get the source input as well
+
+```bash
+cd /collector-matching/data/Meise_doi-10.15468-dl.ax9zkh/
+
+time ruby ../../bin/agent_parse4tsv.rb --develop \
+  --input  occurrence_recordedBy_eventDate_occurrenceIDs_20230830.tsv \
+  --output occurrence_recordedBy_eventDate_occurrenceIDs_20230830_parsed.tsv
+
+# We have the given file structure 
+#   family → given → suffix → particle → dropping_particle → nick → appellation → title → source_data → parsed_names → cleaned_names → …
+#   $1     → $2    → $3     → $4       → $5                → $6   → $7          → $8    → $9          → $10          → $11           → …
+file="occurrence_recordedBy_eventDate_occurrenceIDs_20230830_parsed.tsv";
+awk --field-separator=$'\t' '
+  BEGIN { 
+    print "| family | given | … | source_data | parsed_names | cleaned_names |\n| --- | --- | --- | --- | --- | --- |" 
+  } 
+  { 
+    # if ($9 ~ /(\[|\])/ && FNR > 1) { # all and any “[” or “]”
+    if ($9 ~ /([^\b ]\[[^ .]+\][^\b ])/ && FNR > 1) { # brackets inbetween a name string, like `Buto[m]a`
+      print "| " $1 " | " $2 " | … | `" $9 "` | `" $10 "` | `" $11 "` | " 
+    } 
+  }' "${file}" \
+  | column --output-separator '|'  --table --separator '|' \
+  > source_names_with_brackets_inbetween.md
+```
+
+
 ### Convert CSV Data to TSV
 
 Use `csv2tsv.py filename.csv` and it will convert it to `filename.csv.tsv` having tabbed separated columns.

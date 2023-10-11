@@ -4,4 +4,6 @@
 
 skipped_names*
 
-test_*
+source_names_with_*
+
+test*
