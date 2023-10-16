@@ -6,10 +6,26 @@ Here we gathered tools to assist the name matching of (biological) collector nam
 - You need to know programming or at least code programming understanding to use these tools. 
 - If you have Jupyter Notebook and Python installed on your machine you can use or adapt the Notebook scripts to your needs more easily.
 
+Steps in general:
+
+1. Getting Data (source names)
+    
+    - construct or prepare collector name data
+    - parse names with dwcagent, i.e. standardization of given verbatim name lists into individual names
+
+2. Getting Data (resource names)
+
+    - get name lists with public person identifiers from WikiData (also other SPARQL resources would do)
+    
+3. Matching of Names
+
+    - do matching and comparison of fragmentated name parts (n-grams) using k-nearest neighbour or cos similarity
+    - write table data output (e.g. CSV) according to DarwinCore Agent Attribution (GitHub: [RDA_recommendations.md](https://github.com/tdwg/attribution/blob/master/documents/RDA_recommendations.md), [RDA_technical_examples.md](https://github.com/tdwg/attribution/blob/master/documents/RDA_technical_examples.md)) to faciliate post processing
+    
+
 ## Getting Data
 
-WikiData:
-- [`create_wikidata_datasets_botanists.ipynb`](./create_wikidata_datasets_botanists.ipynb)—to get data of botanists from WikiData
+Get or construct *source* names, i.e. collector name lists—see the following examples
 
 BGBM example:
 - [`create_bgbm_gbif-occurrence_collectors_dataset.ipynb`](./create_bgbm_gbif-occurrence_collectors_dataset.ipynb)—create an example data set from GIBF (*Virtual Herbarium Germany* (BGBM) <https://doi.org/10.15468/dl.tued2e>)
@@ -23,6 +39,17 @@ Naturalis example:
 
 Plazi example:
 - [`create_plazi_collectors_dataset.ipynb`](./create_plazi_collectors_dataset.ipynb)—create only data from Plazi‘s Collection Statistics “Materials Citation Data” (<https://tb.plazi.org/GgServer/srsStats>)
+
+---
+
+Get *resource* names of WikiData:
+
+- [`create_wikidata_datasets_botanists.ipynb`](./create_wikidata_datasets_botanists.ipynb)—to get data of botanists from WikiData
+
+## Parsing of Name Lists
+
+See ☞ [`bin/README.md`](./bin/README.md).
+
 
 ## Matching of Names
 
@@ -45,10 +72,6 @@ Naturalis examples:
 Plazi example:
 
 - [`create_and_match_plazi_collectors_dataset.ipynb`](./create_and_match_plazi_collectors_dataset.ipynb)—create and match data from Plazi‘s Collection Statistics “Materials Citation Data” (<https://tb.plazi.org/GgServer/srsStats>)
-
-## Parsing of Name Lists
-
-See ☞ [`bin/README.md`](./bin/README.md).
 
 
 ## TODO and Review
