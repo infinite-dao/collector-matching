@@ -25,7 +25,7 @@ Steps in general:
 
 ## Getting Data
 
-Get or construct *source* names, i.e. collector name lists—see the following examples
+Get or construct *source* names, i.e. collector name lists—see the following examples.
 
 BGBM example:
 - [`create_bgbm_gbif-occurrence_collectors_dataset.ipynb`](./create_bgbm_gbif-occurrence_collectors_dataset.ipynb)—create an example data set from GIBF (*Virtual Herbarium Germany* (BGBM) <https://doi.org/10.15468/dl.tued2e>)
@@ -42,7 +42,7 @@ Plazi example:
 
 ---
 
-Get *resource* names of WikiData:
+Get *resource* names of WikiData to compare collector *source* names with:
 
 - [`create_wikidata_datasets_botanists.ipynb`](./create_wikidata_datasets_botanists.ipynb)—to get data of botanists from WikiData
 
