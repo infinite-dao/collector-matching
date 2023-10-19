@@ -16,8 +16,12 @@ Provide a result table similar to the following one:
  
 For attribution see TDWG Attribution Interest Group, e.g. <https://github.com/tdwg/attribution/blob/master/documents/RDA_technical_examples.md>.
 
-# Analysis
 
 # Adding DarwinCore attribution CSV
 
 - in progress see [match_names_Meise-dwcagent-parsed-eventDate_vs_WikiData_cosine-similarity.ipynb](match_names_Meise-dwcagent-parsed-eventDate_vs_WikiData_cosine-similarity.ipynb)
+- remove unnecessary CSV result if DarwinCore-attribution output is properly written
+  
+    - do it strictly for Meise, BGBM (2023-10-17 17:36:10)
+
+# Analysis
