@@ -19,7 +19,7 @@ Steps in general:
     
 3. Matching of Names
 
-    - do matching and comparison of fragmentated name parts (n-grams) using k-nearest neighbour or cos similarity
+    - do matching and comparison of fragmentated name parts (n-grams) using k-nearest neighbour or cosine similarity
     - write table data output (e.g. CSV) according to DarwinCore Agent Attribution (GitHub: [RDA_recommendations.md](https://github.com/tdwg/attribution/blob/master/documents/RDA_recommendations.md), [RDA_technical_examples.md](https://github.com/tdwg/attribution/blob/master/documents/RDA_technical_examples.md)) to faciliate post processing
     
 
@@ -53,21 +53,22 @@ See ☞ [`bin/README.md`](./bin/README.md).
 
 ## Matching of Names
 
-BGBM examples:
+BGBM examples matching also life time and `eventDate` (sampling date)
 
-- [`match_names_BGBM-dwcagent-parsed_vs_WikiData_k-nearest.ipynb`](./match_names_BGBM-dwcagent-parsed_vs_WikiData_k-nearest.ipynb)—performing a name matching of parsed collector names (from own source data) to WikiData botanist names
-- [`match_names_BGBM-dwcagent-parsed-eventDate_vs_WikiData_k-nearest.ipynb`](./match_names_BGBM-dwcagent-parsed-eventDate_vs_WikiData_k-nearest.ipynb)—performing a name matching of parsed collector names including eventDate (=date of sampling event)
-- [`match_names_BGBM-dwcagent-parsed_vs_WikiData_cosine-similarity.ipynb`](./match_names_BGBM-dwcagent-parsed_vs_WikiData_cosine-similarity.ipynb)—performing a name matching using cosine-similarity of parsed collector names (from own source data) to WikiData botanist names
+- [`match_names_BGBM-dwcagent-parsed-eventDate_vs_WikiData_k-nearest.ipynb`](./match_names_BGBM-dwcagent-parsed-eventDate_vs_WikiData_k-nearest.ipynb)—using k-nearest neighbour distance of parsed collector names, including eventDate (=date of sampling event)
+- [`match_names_BGBM-dwcagent-parsed-eventDate_vs_WikiData_cosine-similarity.ipynb`](./match_names_BGBM-dwcagent-parsed-eventDate_vs_WikiData_cosine-similarity.ipynb)—using cosine-similarity of parsed collector names, including eventDate (=date of sampling event)
+
+BGBM examples _without_ `eventDate` (sampling date): result data removed, practically old code, it’s better to have some kind of sampling date/eventDate reference to match also the life time of a collector
 
 Meise examples:
 
-- [`match_names_Meise-dwcagent-parsed-eventDate_vs_WikiData_k-nearest.ipynb`](./match_names_Meise-dwcagent-parsed-eventDate_vs_WikiData_k-nearest.ipynb)—performing a name matching of parsed collector names including eventDate (=date of sampling event)
-- [`match_names_Meise-dwcagent-parsed-eventDate_vs_WikiData_cosine-similarity.ipynb`](./match_names_Meise-dwcagent-parsed-eventDate_vs_WikiData_cosine-similarity.ipynb)—performing a name matching using cosine-similarity of parsed collector names (from own source data) to WikiData botanist names including eventDate (=date of sampling event)
+- [`match_names_Meise-dwcagent-parsed-eventDate_vs_WikiData_k-nearest.ipynb`](./match_names_Meise-dwcagent-parsed-eventDate_vs_WikiData_k-nearest.ipynb)—using k-nearest neighbour distance of parsed collector names, including eventDate (=date of sampling event)
+- [`match_names_Meise-dwcagent-parsed-eventDate_vs_WikiData_cosine-similarity.ipynb`](./match_names_Meise-dwcagent-parsed-eventDate_vs_WikiData_cosine-similarity.ipynb)—using cosine-similarity of parsed collector names, including eventDate (=date of sampling event)
 
 Naturalis examples:
 
-- [`match_names_Naturalis-dwcagent-parsed-eventDate_vs_WikiData_k-nearest.ipynb`](./match_names_Naturalis-dwcagent-parsed-eventDate_vs_WikiData_k-nearest.ipynb)—performing a name matching of parsed collector names including eventDate (=date of sampling event)
-- [`match_names_Naturalis-dwcagent-parsed-eventDate_vs_WikiData_cosine-similarity.ipynb`](./match_names_Naturalis-dwcagent-parsed-eventDate_vs_WikiData_cosine-similarity.ipynb)—performing a name matching using cosine-similarity of parsed collector names (from own source data) to WikiData botanist names including eventDate (=date of sampling event)
+- [`match_names_Naturalis-dwcagent-parsed-eventDate_vs_WikiData_k-nearest.ipynb`](./match_names_Naturalis-dwcagent-parsed-eventDate_vs_WikiData_k-nearest.ipynb)—using k-nearest neighbour distance of parsed collector names, including eventDate (=date of sampling event)
+- [`match_names_Naturalis-dwcagent-parsed-eventDate_vs_WikiData_cosine-similarity.ipynb`](./match_names_Naturalis-dwcagent-parsed-eventDate_vs_WikiData_cosine-similarity.ipynb)—using cosine-similarity of parsed collector names, including eventDate (=date of sampling event)
 
 Plazi example:
 
@@ -79,14 +80,13 @@ Plazi example:
 - review and improve the code:
 
     - compare name matching algorithm (<https://github.com/nielsklazenga/avh-collectors/cosine_similarity.ipynb> ⇌ `nearest_neighbour`)
+    - improve name matching if own source data containing a full name, this can be matched against WikiData (perhaps parsed) `itemLabel`, which is mostly the full name, also fine tuning (k-neighbour: Number of neighbors required for each sample by default for :meth:`kneighbors` queries (originally 5).)
 
-- improve name matching if own source data contain a full name, this can be matched against WikiData (perhaps parsed) `itemLabel`, which is mostly the full name
-
-- add other example data sets: Meise, Naturalis
-- add time matching as well
+- review life time matching
 
     - matching including `eventDate` (i.e. sampling date in this case; read https://www.gbif.org/data-quality-requirements-occurrences#dcEventDate)
     - floruit time span of person
     - recorded date of museum sample if no life data of the person are available ?occurrence.txt → eventDate? (see https://www.gbif.org/developer/occurrence section “Query parameters explained”
 
-- add a conclusion of matching results and/or comparison or a short summary (the important points)
+- review scoring/rating
+- review DarwinCore attribution output (e.g. provided columns)
