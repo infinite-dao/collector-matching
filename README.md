@@ -25,6 +25,18 @@ Steps in general:
     - write table data output (e.g. CSV) according to DarwinCore Agent Attribution (GitHub: [RDA_recommendations.md](https://github.com/tdwg/attribution/blob/master/documents/RDA_recommendations.md), [RDA_technical_examples.md](https://github.com/tdwg/attribution/blob/master/documents/RDA_technical_examples.md)) to faciliate post processing
     
 
+As a visual summary, the processing goes like:
+
+```mermaid
+flowchart LR
+    get_data["getting data"] ---> match_data["matching data"] --> results["results and output"]
+    source["fa:fa-table collector names\n(source)"] -->|dwcagent\nparsing| prepareSource["pepare names/\nname lists"]
+    resource["fa:fa-table wikidata names\n(resource)"] --> prepareResource["pepare names"]
+    prepareSource --> matching{"fa:fa-cogs\nngram-language-analysis\nk-means distance/\ncosine similarity\n…"}
+    prepareResource --> matching
+    matching --> CSVoutput["fa:fa-table CSV output\naccording to \nDwC agent attribution"]
+```
+
 ## Getting Data
 
 Get or construct *source* names, i.e. collector name lists—see the following examples.
