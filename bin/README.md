@@ -2,7 +2,7 @@
 A collection of tools:
 
 - `agent_parse4tsv.rb` — parses names of tabulator separated values and needs <https://libraries.io/rubygems/dwc_agent> to be installed.
-- `csv2tsv.py filename.csv` — will convert files having the format of comma separate values (CSV) to tabulator separated values using [pandas.pydata.org (`dataframe.to_csv`)](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_csv.html#pandas-dataframe-to-csv)
+- `csv2tsv.py filename.csv` — will convert files having the format of comma separated values (CSV) to tabulator separated values (TSV) using [pandas.pydata.org (`dataframe.to_csv`)](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_csv.html#pandas-dataframe-to-csv)
 
 ## Parsing of Name Lists
 
@@ -12,14 +12,35 @@ Often you have multiple names in a list and want to separate them. For this you 
 
 ```bash
 ruby agent_parse4tsv.rb --help # show help and usage
+  # Usage: ruby agent_parse4tsv.rb [options]
+  #   (version of dwc_agent: 3.0.16.0)
+  # 
+  #   We read tabulator separated input data and parse the names (from the 1st column)
+  #   The text data must have a column header; if there are any other columns, they will be added to the parsed output.
+  #   input (default) data/VHde_doi-10.15468-dl.tued2e/occurrence_recordedBy_occurrenceIDs_20230524.tsv
+  #   output (default) data/VHde_doi-10.15468-dl.tued2e/occurrence_recordedBy_occurrenceIDs_20230524_parsed.tsv
+  # 
+  # Options: 
+  #     -i, --input [input]              file and path of the input data (tsv)
+  #     -o, --output [output]            file and path of the output (tsv)
+  #     -d, --develop                    show parsed source strings anyway (extra column)
+  #     -p, --parsing-level [level]      level of parsing: 0 = clean names (default); 1 = on empty cleaned name use the parsed name; 2 = only do parsing, no cleaning
+  #     -l, --logfile                    write log file with skipped names (into the output directory)
+```
 
-# if you have a tabulator separated data file containing column headers and in the 1st column the name lists, then try something like:
-ruby agent_parse4tsv.rb \
+The input file must be in format of tabulator separated values (TSV), and the names in the first column, with the column header in the frist row …
+
+- we also use option `--develop` to get the parsed names, cleaned names in extra columns
+
+… then try something like:
+
+```bash
+ruby agent_parse4tsv.rb --develop \
   --input  ../data/plazi_GbifOccurrenceId_CitCollector_20230719.tsv \
   --output ../data/plazi_GbifOccurrenceId_CitCollector_20230719_parsed.tsv
 
 # or check also running time of the parsing script with `time command`
-time ruby agent_parse4tsv.rb \
+time ruby agent_parse4tsv.rb --develop \
   --input  ../data/plazi_GbifOccurrenceId_CitCollector_20230719.tsv \
   --output ../data/plazi_GbifOccurrenceId_CitCollector_20230719_parsed.tsv
   # real    5m2,451s
@@ -106,6 +127,6 @@ awk --field-separator=$'\t' '
 ```
 
 
-### Convert CSV Data to TSV
+## Convert CSV Data to TSV
 
 Use `csv2tsv.py filename.csv` and it will convert it to `filename.csv.tsv` having tabbed separated columns.
