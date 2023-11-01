@@ -1,7 +1,8 @@
-A collection of tools.
 
-`agent_parse4tsv.rb` — parses tabulator separated files and needs <https://libraries.io/rubygems/dwc_agent> to be installed.
+A collection of tools:
 
+- `agent_parse4tsv.rb` — parses names of tabulator separated values and needs <https://libraries.io/rubygems/dwc_agent> to be installed.
+- `csv2tsv.py filename.csv` — will convert files having the format of comma separate values (CSV) to tabulator separated values using [pandas.pydata.org (`dataframe.to_csv`)](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_csv.html#pandas-dataframe-to-csv)
 
 ## Parsing of Name Lists
 
