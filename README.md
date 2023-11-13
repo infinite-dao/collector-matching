@@ -30,14 +30,20 @@ As a visual summary, the processing goes like:
 ```mermaid
 flowchart LR
     get_data["getting data"] ---> match_data["matching data"] --> results["results and output"]
-    source["fa:fa-table collector names\n(source)"] -->|dwcagent\nparsing| prepareSource["pepare names/\nname lists"]
-    resource["fa:fa-table wikidata names\n(resource)"] --> prepareResource["pepare names"]
+    source["fa:fa-table collector names\n(source)"] -->|dwcagent\nparsing| prepareSource["prepare names/\nname lists"]
+    resource["fa:fa-table wikidata names\n(resource)"] --> prepareResource["prepare names"]
     prepareSource --> matching{"fa:fa-cogs\nngram-language-analysis\nk-means distance/\ncosine similarity\n…"}
     prepareResource --> matching
     matching --> CSVoutput["fa:fa-table CSV output\naccording to \nDwC agent attribution"]
 ```
 
 ## Getting Data
+
+Get *resource* names of WikiData to compare collector *source* names with:
+
+- [`create_wikidata_datasets_botanists.ipynb`](./create_wikidata_datasets_botanists.ipynb)—to get data of botanists from WikiData
+
+---
 
 Get or construct *source* names, i.e. collector name lists—see the following examples.
 
@@ -54,11 +60,6 @@ Naturalis example:
 Plazi example:
 - [`create_plazi_collectors_dataset.ipynb`](./create_plazi_collectors_dataset.ipynb)—create only data from Plazi‘s Collection Statistics “Materials Citation Data” (<https://tb.plazi.org/GgServer/srsStats>)
 
----
-
-Get *resource* names of WikiData to compare collector *source* names with:
-
-- [`create_wikidata_datasets_botanists.ipynb`](./create_wikidata_datasets_botanists.ipynb)—to get data of botanists from WikiData
 
 ## Parsing of Name Lists
 
