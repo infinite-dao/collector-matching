@@ -37,6 +37,11 @@ flowchart LR
     matching --> CSVoutput["fa:fa-table CSV output\naccording to \nDwC agent attribution"]
 ```
 
+There are 2 approaches to calculate name similarities, distances for this code, these have been labelled with tags:
+  
+- `vX.X-match-family-last` name matching has “given + particle … family, suffix“, newer calculation approach
+- `vX.X-match-family-first` name matching has “family, given + particle …”, old calculation approach (won’t continue)
+
 ## Getting Data
 
 Get *resource* names of WikiData to compare collector *source* names with:
