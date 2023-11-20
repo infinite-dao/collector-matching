@@ -24,7 +24,7 @@ ruby agent_parse4tsv.rb --help # show help and usage
   #     -i, --input [input]              file and path of the input data (tsv)
   #     -o, --output [output]            file and path of the output (tsv)
   #     -d, --develop                    show parsed source strings anyway (extra column)
-  #     -p, --parsing-level [level]      level of parsing: 0 = clean names (default); 1 = on empty cleaned name use the parsed name; 2 = only do parsing, no cleaning
+  #     -p, --parsing-level [level]      level of parsing: 0 = clean names (default); 1 = on empty cleaned this_name_reversed use the parsed this_name_reversed; 2 = only do parsing, no cleaning
   #     -l, --logfile                    write log file with skipped names (into the output directory)
 ```
 
@@ -118,7 +118,7 @@ awk --field-separator=$'\t' '
   } 
   { 
     # if ($9 ~ /(\[|\])/ && FNR > 1) { # all and any “[” or “]”
-    if ($9 ~ /([^\b ]\[[^ .]+\][^\b ])/ && FNR > 1) { # brackets inbetween a name string, like `Buto[m]a`
+    if ($9 ~ /([^\b ]\[[^ .]+\][^\b ])/ && FNR > 1) { # brackets inbetween a this_name_reversed string, like `Buto[m]a`
       print "| " $1 " | " $2 " | … | `" $9 "` | `" $10 "` | `" $11 "` | " 
     } 
   }' "${file}" \
