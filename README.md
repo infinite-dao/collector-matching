@@ -39,8 +39,8 @@ flowchart LR
 
 There are 2 approaches to calculate name similarities, distances for this code, these have been labelled with tags:
   
-- `vX.X-match-family-last` name matching has “given + particle … family, suffix“, newer calculation approach, e.g. [v0.1-match-family-last (of 2023-11-20, commit 0394c6…)](https://github.com/infinite-dao/collector-matching/tree/v0.1-match-family-last)
-- `vX.X-match-family-first` name matching has “family, given + particle …”, old calculation approach (won’t continue), e.g. [v1.0-match-family-first (of 2023-11-16, commit 47178e…)](https://github.com/infinite-dao/collector-matching/tree/v1.0-match-family-first)
+- `vX.X-match-family-last` name matching has “given + particle … family, suffix“, newer calculation approach, e.g. [v0.1-match-family-last](https://github.com/infinite-dao/collector-matching/tree/v0.1-match-family-last) (of 2023-11-20, commit 0394c6…)
+- `vX.X-match-family-first` name matching has “family, given + particle …”, old calculation approach (won’t continue), e.g. [v1.0-match-family-first](https://github.com/infinite-dao/collector-matching/tree/v1.0-match-family-first) (of 2023-11-16, commit 47178e…)
 
 ## Getting Data
 
