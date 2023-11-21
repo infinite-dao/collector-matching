@@ -24,6 +24,9 @@ Steps in general:
     - do matching and comparison of fragmentated name parts (n-grams) using k-nearest neighbour or cosine similarity
     - write table data output (e.g. CSV) according to DarwinCore Agent Attribution (GitHub: [RDA_recommendations.md](https://github.com/tdwg/attribution/blob/master/documents/RDA_recommendations.md), [RDA_technical_examples.md](https://github.com/tdwg/attribution/blob/master/documents/RDA_technical_examples.md)) to faciliate post processing
     
+4. Decide the associated linkages
+
+    - These programmes only provide the basis for the decision, the decision as to which names are to be linked to which identifiers should not be made blindly and automatically, but a person (e.g. curator) should assess this and then decide ;-)
 
 As a visual summary, the processing goes like:
 
@@ -37,10 +40,10 @@ flowchart LR
     matching --> CSVoutput["fa:fa-table CSV output\naccording to \nDwC agent attribution"]
 ```
 
-There are 2 approaches to calculate name similarities, distances for this code, these have been labelled with tags:
+Two approaches to calculating name similarities and distances were pursued for this code, which are labelled with tags:
   
-- `vX.X-match-family-last` name matching has “given + particle … family, suffix“, newer calculation approach, e.g. [v0.1-match-family-last](https://github.com/infinite-dao/collector-matching/tree/v0.1-match-family-last) (of 2023-11-20)
-- `vX.X-match-family-first` name matching has “family, given + particle …”, old calculation approach (won’t continue), e.g. [v1.0-match-family-first](https://github.com/infinite-dao/collector-matching/tree/v1.0-match-family-first) (of 2023-11-16, commit 47178e…)
+- `vX.X-match-family-last` name matching has “given + particle … *family*, suffix“, newer calculation approach, e.g. [v0.1-match-family-last](https://github.com/infinite-dao/collector-matching/tree/v0.1-match-family-last) (of 2023-11-20)
+- `vX.X-match-family-first` name matching has “*family*, given + particle …”, old calculation approach (won’t continue), e.g. [v1.0-match-family-first](https://github.com/infinite-dao/collector-matching/tree/v1.0-match-family-first) (of 2023-11-16, commit 47178e…)
 
 ## Getting Data
 
