@@ -53,20 +53,15 @@ Get *resource* names of WikiData to compare collector *source* names with:
 
 ---
 
-Get or construct *source* names, i.e. collector name lists—see the following examples.
+Get or construct *source* names, i.e. collector name lists—see the following examples where we use, in most cases, the GIBF occurrence data of the institutions themselves:
 
-BGBM example:
-- [`create_bgbm_gbif-occurrence_collectors_dataset.ipynb`](./create_bgbm_gbif-occurrence_collectors_dataset.ipynb)—create an example data set from GIBF (*Virtual Herbarium Germany* (BGBM) <https://doi.org/10.15468/dl.tued2e>)
-- [`create_bgbm_gbif-occurrence_collectors_eventDate_dataset.ipynb`](./create_bgbm_gbif-occurrence_collectors_eventDate_dataset.ipynb)—create an example data set with collection date (`eventDate`) from GIBF (*Virtual Herbarium Germany* (BGBM) <https://doi.org/10.15468/dl.tued2e>)
-
-Meise example:
-- [`create_meise_gbif-occurrence_collectors_eventDate_dataset.ipynb`](./create_meise_gbif-occurrence_collectors_eventDate_dataset.ipynb)—create an example data set with collection date (`eventDate`) from GIBF (*Meise Botanic Garden Herbarium* <https://doi.org/10.15468/dl.ax9zkh>)
-
-Naturalis example:
-- [`create_naturalis_gbif-occurrence_collectors_eventDate_dataset.ipynb`](./create_naturalis_gbif-occurrence_collectors_eventDate_dataset.ipynb)—create an example data set with collection date (`eventDate`) from GIBF (*Naturalis Biodiversity Center (NL) - Botany* <https://doi.org/10.15468/dl.uw8rxk>)
-
-Plazi example:
-- [`create_plazi_collectors_dataset.ipynb`](./create_plazi_collectors_dataset.ipynb)—create only data from Plazi‘s Collection Statistics “Materials Citation Data” (<https://tb.plazi.org/GgServer/srsStats>)
+| Institution | Remarks | Script(s) |
+| --- | --- | --- |
+| BGBM | plain name data | [`create_bgbm_gbif-occurrence_collectors_dataset.ipynb`](./create_bgbm_gbif-occurrence_collectors_dataset.ipynb) |
+| BGBM | name data with collection date (`eventDate`) for life time comparison | [`create_bgbm_gbif-occurrence_collectors_eventDate_dataset.ipynb`](./create_bgbm_gbif-occurrence_collectors_eventDate_dataset.ipynb) |
+| Meise | name data with collection date (`eventDate`) for life time comparison | [`create_meise_gbif-occurrence_collectors_eventDate_dataset.ipynb`](./create_meise_gbif-occurrence_collectors_eventDate_dataset.ipynb) |
+| Naturalis | name data with collection date (`eventDate`) for life time comparison | [`create_naturalis_gbif-occurrence_collectors_eventDate_dataset.ipynb`](./create_naturalis_gbif-occurrence_collectors_eventDate_dataset.ipynb) |
+| Plazi | Plazi‘s Collection Statistics “Materials Citation Data” | [`create_plazi_collectors_dataset.ipynb`](./create_plazi_collectors_dataset.ipynb)<br>[`create_and_match_plazi_collectors_dataset.ipynb`](./create_and_match_plazi_collectors_dataset.ipynb) |
 
 
 ## Parsing of Name Lists
@@ -76,40 +71,19 @@ See ☞ [`bin/README.md`](./bin/README.md).
 
 ## Matching of Names
 
-BGBM examples matching also life time and `eventDate` (sampling date)
-
-- [`match_names_BGBM-dwcagent-parsed-eventDate_vs_WikiData_k-nearest.ipynb`](./match_names_BGBM-dwcagent-parsed-eventDate_vs_WikiData_k-nearest.ipynb)—using k-nearest neighbour distance of parsed collector names, including eventDate (=date of sampling event)
-- [`match_names_BGBM-dwcagent-parsed-eventDate_vs_WikiData_cosine-similarity.ipynb`](./match_names_BGBM-dwcagent-parsed-eventDate_vs_WikiData_cosine-similarity.ipynb)—using cosine-similarity of parsed collector names, including eventDate (=date of sampling event)
+| Institution | Remarks | Script(s) |
+| --- | --- | --- |
+| BGBM | cosine-similarity, with collection date (`eventDate`) for life time comparison | [`match_names_BGBM-dwcagent-parsed-eventDate_vs_WikiData_cosine-similarity.ipynb`](./match_names_BGBM-dwcagent-parsed-eventDate_vs_WikiData_cosine-similarity.ipynb) |
+| BGBM | k-nearest neighbour distance, with collection date (`eventDate`) for life time comparison | [`match_names_BGBM-dwcagent-parsed-eventDate_vs_WikiData_k-nearest.ipynb`](./match_names_BGBM-dwcagent-parsed-eventDate_vs_WikiData_k-nearest.ipynb) |
+| Meise | cosine-similarity, with collection date (`eventDate`) for life time comparison | [`match_names_Meise-dwcagent-parsed-eventDate_vs_WikiData_cosine-similarity.ipynb`](./match_names_Meise-dwcagent-parsed-eventDate_vs_WikiData_cosine-similarity.ipynb) |
+| Meise | k-nearest neighbour distance, with collection date (`eventDate`) for life time comparison | [`match_names_Meise-dwcagent-parsed-eventDate_vs_WikiData_k-nearest.ipynb`](./match_names_Meise-dwcagent-parsed-eventDate_vs_WikiData_k-nearest.ipynb) |
+| Naturalis | cosine-similarity, with collection date (`eventDate`) for life time comparison | [`match_names_Naturalis-dwcagent-parsed-eventDate_vs_WikiData_cosine-similarity.ipynb`](./match_names_Naturalis-dwcagent-parsed-eventDate_vs_WikiData_cosine-similarity.ipynb) |
+| Naturalis | k-nearest neighbour distance, with collection date (`eventDate`) for life time comparison | [`match_names_Naturalis-dwcagent-parsed-eventDate_vs_WikiData_k-nearest.ipynb`](./match_names_Naturalis-dwcagent-parsed-eventDate_vs_WikiData_k-nearest.ipynb) |
+| Plazi | k-nearest neighbour distance, with citation date for life time comparison | [`create_and_match_plazi_collectors_dataset.ipynb`](./create_and_match_plazi_collectors_dataset.ipynb) |
 
 BGBM examples _without_ `eventDate` (sampling date): result data removed, practically old code, it’s better to have some kind of sampling date/eventDate reference to match also the life time of a collector
-
-Meise examples:
-
-- [`match_names_Meise-dwcagent-parsed-eventDate_vs_WikiData_k-nearest.ipynb`](./match_names_Meise-dwcagent-parsed-eventDate_vs_WikiData_k-nearest.ipynb)—using k-nearest neighbour distance of parsed collector names, including eventDate (=date of sampling event)
-- [`match_names_Meise-dwcagent-parsed-eventDate_vs_WikiData_cosine-similarity.ipynb`](./match_names_Meise-dwcagent-parsed-eventDate_vs_WikiData_cosine-similarity.ipynb)—using cosine-similarity of parsed collector names, including eventDate (=date of sampling event)
-
-Naturalis examples:
-
-- [`match_names_Naturalis-dwcagent-parsed-eventDate_vs_WikiData_k-nearest.ipynb`](./match_names_Naturalis-dwcagent-parsed-eventDate_vs_WikiData_k-nearest.ipynb)—using k-nearest neighbour distance of parsed collector names, including eventDate (=date of sampling event)
-- [`match_names_Naturalis-dwcagent-parsed-eventDate_vs_WikiData_cosine-similarity.ipynb`](./match_names_Naturalis-dwcagent-parsed-eventDate_vs_WikiData_cosine-similarity.ipynb)—using cosine-similarity of parsed collector names, including eventDate (=date of sampling event)
-
-Plazi example:
-
-- [`create_and_match_plazi_collectors_dataset.ipynb`](./create_and_match_plazi_collectors_dataset.ipynb)—create and match data from Plazi‘s Collection Statistics “Materials Citation Data” (<https://tb.plazi.org/GgServer/srsStats>)
 
 
 ## TODO and Review
 
-- review and improve the code:
-
-    - compare name matching algorithm (<https://github.com/nielsklazenga/avh-collectors/cosine_similarity.ipynb> ⇌ `nearest_neighbour`)
-    - improve name matching if own source data containing a full name, this can be matched against WikiData (perhaps parsed) `itemLabel`, which is mostly the full name, also fine tuning (k-neighbour: Number of neighbors required for each sample by default for :meth:`kneighbors` queries (originally 5).)
-
-- review life time matching
-
-    - matching including `eventDate` (i.e. sampling date in this case; read https://www.gbif.org/data-quality-requirements-occurrences#dcEventDate)
-    - floruit time span of person
-    - recorded date of museum sample if no life data of the person are available ?occurrence.txt → eventDate? (see https://www.gbif.org/developer/occurrence section “Query parameters explained”
-
-- review scoring/rating
-- review DarwinCore attribution output (e.g. provided columns)
+See [TODO.md](TODO.md)

@@ -1,4 +1,27 @@
-# Results
+# General improvements in the follow-up
+
+- testing
+
+    - test the reliability of the name assignment on data that has already been assigned and reviewed, false-positive testing on sample data
+    - test `dwc_agent`: whether first names and call names entered in WikiData are also included in the name mapping result after standardisation with `dwc_agent`
+
+- review and improve the code:
+
+    - Include alternative names `skos:altLabel` <https://github.com/infinite-dao/collector-matching/issues/1#issuecomment-1819337177> from WikiData (resource)
+    - compare name matching algorithm (<https://github.com/nielsklazenga/avh-collectors/cosine_similarity.ipynb> ⇌ `nearest_neighbour`)
+    - Code improvements, ?kmeans optimisation https://github.com/sib-swiss/intermediate-python-training/blob/master/course2/01_resource_usage_measure_and_profiling.ipynb, also fine tuning (k-neighbour: Number of neighbors required for each sample by default for :meth:`kneighbors` queries (originally 5).)
+
+- review life time matching
+
+    - matching including `eventDate` (i.e. sampling date in this case; read https://www.gbif.org/data-quality-requirements-occurrences#dcEventDate)
+    - floruit time span of person (almost no data)
+    - recorded date of museum sample if no life data of the person are available ?occurrence.txt → eventDate? (see https://www.gbif.org/developer/occurrence section “Query parameters explained”
+
+- review scoring/rating
+- review DarwinCore attribution output (e.g. provided columns)
+
+
+# Results (Done)
 
 Provide a result table similar to the following one:
 
@@ -17,11 +40,6 @@ Provide a result table similar to the following one:
 For attribution see TDWG Attribution Interest Group, e.g. <https://github.com/tdwg/attribution/blob/master/documents/RDA_technical_examples.md>.
 
 
-# Adding DarwinCore attribution CSV
+# Adding DarwinCore attribution CSV (almost Done)
 
-- in progress see [match_names_Meise-dwcagent-parsed-eventDate_vs_WikiData_cosine-similarity.ipynb](match_names_Meise-dwcagent-parsed-eventDate_vs_WikiData_cosine-similarity.ipynb)
 - remove unnecessary CSV result if DarwinCore-attribution output is properly written
-  
-    - do it strictly for Meise, BGBM (2023-10-17 17:36:10)
-
-# Analysis
