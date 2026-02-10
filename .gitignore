@@ -1,0 +1,18 @@
+# see also in sub directories
+match_names_*.py
+match_names_Test*
+test*.ipynb
+test*.csv
+test*.tsv
+
+create_botanypilot_dwciri_collectors_dataset.ipynb
+create_bgbm_botanypilot_collectors_dataset.ipynb
+
+Berichte/
+berichte/
+.ipynb_checkpoints/
+.idea/
+venv/
+test/
+
+*/.gitignore
