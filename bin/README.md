@@ -1,7 +1,7 @@
 
 A collection of tools:
 
-- `agent_parse4tsv.rb` — parses names of tabulator separated values and needs <https://libraries.io/rubygems/dwc_agent> to be installed.
+- `agent_parse4tsv.rb` — parses names of tabulator separated values and needs <https://libraries.io/rubygems/dwc_agent> to be installed (usually with `gem install dwc_agent`, see also [github.com/bionomia/dwc_agent](https://github.com/bionomia/dwc_agent)).
 - `csv2tsv.py filename.csv` — will convert files having the format of comma separated values (CSV) to tabulator separated values (TSV) using [pandas.pydata.org (`dataframe.to_csv`)](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_csv.html#pandas-dataframe-to-csv)
 
 ## Parsing of Name Lists
@@ -13,7 +13,7 @@ Often you have multiple names in a list and want to separate them. For this you 
 ```bash
 ruby agent_parse4tsv.rb --help # show help and usage
   # Usage: ruby agent_parse4tsv.rb [options]
-  #   (version of dwc_agent: 3.0.16.0)
+  #   (version of dwc_agent: 3.4.2.0)
   # 
   #   We read tabulator separated input data and parse the names (from the 1st column)
   #   The text data must have a column header; if there are any other columns, they will be added to the parsed output.
@@ -97,7 +97,7 @@ cat skipped_names.md | column --output-separator '|'  --table --separator '|'
 # | `B. K.`             | at cleaned_0index:1  | `?P.E.G. & B. K.`     |         | 
 ```
 
-#### Get names with `[]`
+#### Get names with with square brackets `[]`
 
 We use `--develop` to get the source input as well
 

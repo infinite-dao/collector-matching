@@ -1,6 +1,7 @@
 # see also in sub directories
 match_names_*.py
 match_names_Test*
+.jupyter_ystore.db
 test*.ipynb
 test*.csv
 test*.tsv

@@ -4,6 +4,9 @@ Display the first 6 lines of a tabular (separated by `\t`) sample data table:
 
 ```bash
 head -n 6 "plazi_GbifOccurrenceId_CitCollector_20230719.tsv" | column -t -s $'\t'
+# add also output separator
+# head -n 6 "plazi_GbifOccurrenceId_CitCollector_20230719.tsv" | column -t -s $'\t' -o ' | '
+# head -n 6 "plazi_GbifOccurrenceId_CitCollector_20230719.tsv" | column --table --separator $'\t' --output-separator ' | '
 
 tsvfile="plazi_GbifOccurrenceId_CitCollector_20230719.tsv"
 head -n 6 "${tsvfile}" | column -t -s $'\t'
@@ -58,5 +61,27 @@ Only evaluate and arrange specific columns, e.g., columns 1 to 11:
 tsvfile="plazi_GbifOccurrenceId_CitCollector_20230719_parsed.tsv"
 head -n 1 "${tsvfile}" | cut -f1-11 \
     && tail -n +2 "${tsvfile}" | sort -t$'\t' -k1,1r | head -n 5 | cut -f1-11
-
+    # (head -n 1 "${tsvfile}" | cut -f1-11 \
+    #     && tail -n +2 "${tsvfile}" | sort -t$'\t' -k1,1r | head -n 5 | cut -f1-11) > test_sorted.tsv
+    # pandoc "test_sorted.tsv" -f tsv -t gfm # TSV into markdown table
 ```
+
+```plain
+family	given	suffix	particle	dropping_particle	nick	appellation	title	source_data	parsed_names	cleaned_names
+ҫa	F. A. Mendon							A. W. Exell & F. A. Mendon ҫa	parsed:A.W. Exell<SEP>F.A.Mendon ҫa	cleaned:A.W. Exell<SEP>F. A. Mendon ҫa
+ҫa	F. A. Mendon							A. W. Exell & F. A. Mendon ҫa	parsed:A.W. Exell<SEP>F.A.Mendon ҫa	cleaned:A.W. Exell<SEP>F. A. Mendon ҫa
+ҫa	F. A. Mendon							A. W. Exell & F. A. Mendon ҫa	parsed:A.W. Exell<SEP>F.A.Mendon ҫa	cleaned:A.W. Exell<SEP>F. A. Mendon ҫa
+ҫa	F. A. Mendon							A. W. Exell & F. A. Mendon ҫa	parsed:A.W. Exell<SEP>F.A.Mendon ҫa	cleaned:A.W. Exell<SEP>F. A. Mendon ҫa
+ҫa	F. A. Mendon							A. W. Exell & F. A. Mendon ҫa	parsed:A.W. Exell<SEP>F.A.Mendon ҫa	cleaned:A.W. Exell<SEP>F. A. Mendon ҫa
+```
+
+Original data after parsing get into column `source_data`:
+    
+| `family` | `given` | `suffix` | `particle` | `dropping_particle` | `nick` | `appellation` | `title` | `source_data` | `parsed_names` | `cleaned_names` |
+|----|--------------|--|--|--|--|--|--|-------------------------------|---------------------------------------|------------------------------------------|
+| ҫa | F. A. Mendon |  |  |  |  |  |  | A. W. Exell & F. A. Mendon ҫa | parsed:A.W. Exell\<SEP\>F.A.Mendon ҫa | cleaned:A.W. Exell\<SEP\>F. A. Mendon ҫa |
+| ҫa | F. A. Mendon |  |  |  |  |  |  | A. W. Exell & F. A. Mendon ҫa | parsed:A.W. Exell\<SEP\>F.A.Mendon ҫa | cleaned:A.W. Exell\<SEP\>F. A. Mendon ҫa |
+| ҫa | F. A. Mendon |  |  |  |  |  |  | A. W. Exell & F. A. Mendon ҫa | parsed:A.W. Exell\<SEP\>F.A.Mendon ҫa | cleaned:A.W. Exell\<SEP\>F. A. Mendon ҫa |
+| ҫa | F. A. Mendon |  |  |  |  |  |  | A. W. Exell & F. A. Mendon ҫa | parsed:A.W. Exell\<SEP\>F.A.Mendon ҫa | cleaned:A.W. Exell\<SEP\>F. A. Mendon ҫa |
+| ҫa | F. A. Mendon |  |  |  |  |  |  | A. W. Exell & F. A. Mendon ҫa | parsed:A.W. Exell\<SEP\>F.A.Mendon ҫa | cleaned:A.W. Exell\<SEP\>F. A. Mendon ҫa |
+
