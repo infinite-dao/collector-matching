@@ -4,26 +4,72 @@ Here we gathered tools to assist the name matching of (biological) collector nam
 
 *What you need first:*
 
-- You need to know programming or at least code programming understanding to use these tools. 
+- You need to know programming or at least code programming understanding to use these tools.
 - If you have Jupyter Notebook and Python installed on your machine you can use or adapt the Notebook scripts to your needs more easily.
 - One should have the GEM package dwcagent installed: To simplify and standardise name lists (i.e. multiple single names in a single line) into single names (☞ <https://libraries.io/rubygems/dwc_agent>).
 
-Steps in general:
+## Installation & Setup
+
+To ensure a clean environment and avoid dependency conflicts, it is recommended to run this project within a virtual environment (`venv`).
+
+
+1.  **Set up the virtual environment:**
+    This will remove any old environment, create a fresh one, and activate it.
+
+
+    ```bash
+    rm -rf venv/
+    python -m venv venv
+    source venv/bin/activate
+    ```
+
+2.  **Install dependencies:**
+    Upgrade `pip` and install all required packages for the matching algorithm and Jupyter integration.
+
+    ```bash
+    pip install --upgrade pip
+    ```
+    If you develop you can install packages in general:
+    ```bash
+    pip install ipykernel sparqlwrapper pandas scikit-learn scipy sparse_dot_topn ftfy seaborn requests
+    ```
+
+    If you want to use just this configuration you install the set of packages of the `requirements.txt`-repo-version by:
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+
+3.  **Register the Kernel and launch:**
+    To use this environment inside Jupyter, you need to install it as a kernel. Afterward, you can start the notebook.
+
+    ```bash
+    # Register the installed environment as a Jupyter kernel
+    python -m ipykernel install --user --name=botanist_project --display-name "Python (Botanist Name Matching)"
+
+    # Start the notebook server
+    jupyter notebook
+    ```
+
+4.  **Select Kernel:**
+    Once the Jupyter interface opens, make sure to select **“Python (Botanist Name Matching)”** from the Kernel menu.
+
+## Steps in general for Name Matching
 
 1. Getting Data (source names)
-    
+
     - construct or prepare collector name data
     - parse names with dwcagent, i.e. standardization of given verbatim name lists into individual names
 
 2. Getting Data (resource names)
 
     - get name lists with public person identifiers from WikiData (also other SPARQL resources would do)
-    
+
 3. Matching of Names
 
     - do matching and comparison of fragmentated name parts (n-grams) using k-nearest neighbour or cosine similarity
     - write table data output (e.g. CSV) according to DarwinCore Agent Attribution (GitHub: [RDA_recommendations.md](https://github.com/tdwg/attribution/blob/master/documents/RDA_recommendations.md), [RDA_technical_examples.md](https://github.com/tdwg/attribution/blob/master/documents/RDA_technical_examples.md)) to faciliate post processing
-    
+
 4. Decide the associated linkages
 
     - These programmes only provide the basis for the decision, the decision as to which names are to be linked to which identifiers should not be made blindly and automatically, but a person (e.g. curator) should assess this and then decide ;-)
@@ -35,13 +81,13 @@ flowchart LR
     get_data["getting data"] ---> match_data["matching data"] --> results["results and output"]
     source["fa:fa-table collector names\n(source)"] -->|dwcagent\nparsing| prepareSource["prepare names/\nname lists"]
     resource["fa:fa-table wikidata names\n(resource)"] --> prepareResource["prepare names"]
-    prepareSource --> matching{"fa:fa-cogs\nngram-language-analysis\nk-means distance/\ncosine similarity\n…"}
+    prepareSource --> matching{"fa:fa-cogs\nngram-language-analysis\nk-means distance/\ncosine similarity\n…\n(scoring)"}
     prepareResource --> matching
-    matching --> CSVoutput["fa:fa-table CSV output\naccording to \nDwC agent attribution"]
+    matching --> CSVoutput["fa:fa-table CSV output\naccording to \nDwC agent attribution\n(ordered list)"]
 ```
 
 Two approaches to calculating name similarities and distances were pursued for this code, which are labelled with tags:
-  
+
 - `vX.X-match-family-last` name matching has “given + particle … *family*, suffix“, newer calculation approach, e.g. [v0.1-match-family-last](https://github.com/infinite-dao/collector-matching/tree/v0.1-match-family-last) (of 2023-11-21)
 - `vX.X-match-family-first` name matching has “*family*, given + particle …”, old calculation approach (won’t continue), e.g. [v1.0-match-family-first](https://github.com/infinite-dao/collector-matching/tree/v1.0-match-family-first) (of 2023-11-16, commit 47178e…)
 
