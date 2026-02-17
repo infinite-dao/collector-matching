@@ -101,7 +101,7 @@ Two approaches to calculating name similarities and distances were pursued for t
 
 Get *resource* names of WikiData to compare collector *source* names with:
 
-- [`create_wikidata_datasets_botanists.ipynb`](./create_wikidata_datasets_botanists.ipynb)—to get data of botanists from WikiData
+- [`create_wikidata_datasets_botanists-altlabel.ipynb`](./create_wikidata_datasets_botanists-altlabel.ipynb)—to get data of botanists from WikiData
 
 ---
 
