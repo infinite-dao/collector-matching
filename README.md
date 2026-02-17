@@ -13,17 +13,17 @@ Here we gathered tools to assist the name matching of (biological) collector nam
 To ensure a clean environment and avoid dependency conflicts, it is recommended to run this project within a virtual environment (`venv`).
 
 
-1.  **Set up the virtual environment:**
+1.  **Set up the virtual environment the first time:**
     This will remove any old environment, create a fresh one, and activate it.
 
-
     ```bash
-    rm -rf venv/
+    # remove venv, to make a clean new virtual environment directory
+    [ -d venv ] && rm --recursive --force venv/
     python -m venv venv
-    source venv/bin/activate
+    source venv/bin/activate # activate virtual environment
     ```
 
-2.  **Install dependencies:**
+2.  **Install dependencies within `venv`:**
     Upgrade `pip` and install all required packages for the matching algorithm and Jupyter integration.
 
     ```bash
@@ -53,6 +53,12 @@ To ensure a clean environment and avoid dependency conflicts, it is recommended 
 
 4.  **Select Kernel:**
     Once the Jupyter interface opens, make sure to select **“Python (Botanist Name Matching)”** from the Kernel menu.
+
+5. **Eventually — Exit the virtual `venv` setting:**
+    ```bash
+    # once you have finished working with the notebooks you can exit the venv by
+    deactivate # get out of the venv from above
+    ```
 
 ## Steps in general for Name Matching
 
