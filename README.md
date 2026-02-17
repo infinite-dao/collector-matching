@@ -6,7 +6,7 @@ Here we gathered tools to assist the name matching of (biological) collector nam
 
 - You need to know programming or at least code programming understanding to use these tools.
 - If you have Jupyter Notebook and Python installed on your machine you can use or adapt the Notebook scripts to your needs more easily.
-- One should have the GEM package `dwcagent` installed: To simplify and standardise name lists (i.e. multiple single names in a single line) into single names (☞ <https://libraries.io/rubygems/dwc_agent> and [github.com/bionomia/dwc_agent](https://github.com/bionomia/dwc_agent), installd usually with `gem install dwc_agent`).
+- One should have the GEM package `dwcagent` installed: To simplify and standardise name lists, i.e. separate multiple single names in a single line into single names or parse name parts neatly (installed usually with `gem install dwc_agent`; ☞ <https://libraries.io/rubygems/dwc_agent> and [github.com/bionomia/dwc_agent](https://github.com/bionomia/dwc_agent)).
 
 ## Installation & Setup
 
@@ -65,7 +65,7 @@ To ensure a clean environment and avoid dependency conflicts, it is recommended 
 1. Getting Data (source names)
 
     - construct or prepare collector name data
-    - parse names with dwcagent, i.e. standardization of given verbatim name lists into individual names
+    - parse names with `dwcagent`, i.e. standardization of given verbatim name lists into individual names
 
 2. Getting Data (resource names)
 
