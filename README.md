@@ -85,11 +85,11 @@ As a visual summary, the processing goes like:
 ```mermaid
 flowchart LR
     get_data["getting data"] ---> match_data["matching data"] --> results["results and output"]
-    source["fa:fa-table collector names\n(source)"] -->|dwcagent\nparsing| prepareSource["prepare names/\nname lists"]
-    resource["fa:fa-table wikidata names\n(resource)"] --> prepareResource["prepare names"]
-    prepareSource --> matching{"fa:fa-cogs\nngram-language-analysis\nk-means distance/\ncosine similarity\n…\n(scoring)"}
+    source["fa:fa-table collector names<br>(source)"] -->|dwcagent<br>parsing| prepareSource["prepare names/<br>name lists"]
+    resource["fa:fa-table wikidata names<br>(resource)"] --> prepareResource["prepare names"]
+    prepareSource --> matching{"fa:fa-cogs<br>ngram-language-analysis<br>k-means distance/<br>cosine similarity<br>…<br>(scoring)"}
     prepareResource --> matching
-    matching --> CSVoutput["fa:fa-table CSV output\naccording to \nDwC agent attribution\n(ordered list)"]
+    matching --> CSVoutput["fa:fa-table CSV output<br>according to <br>DwC agent attribution<br>(ordered list)"]
 ```
 
 Two approaches to calculating name similarities and distances were pursued for this code, which are labelled with tags:
