@@ -8,7 +8,7 @@
 - review and improve the code:
 
     - compare name matching algorithm (<https://github.com/nielsklazenga/avh-collectors/cosine_similarity.ipynb> ⇌ `nearest_neighbour`)
-    - Code improvements, ?kmeans optimisation https://github.com/sib-swiss/intermediate-python-training/blob/master/course2/01_resource_usage_measure_and_profiling.ipynb, also fine tuning (k-neighbour: Number of neighbors required for each sample by default for :meth:`kneighbors` queries (originally 5).)
+    - Code improvements, kmeans optimisation https://github.com/sib-swiss/intermediate-python-training/blob/master/course2/01_resource_usage_measure_and_profiling.ipynb, also fine tuning (k-neighbour: Add the case of the number of calculated name neighbors for more than `n_neighbor=1`)
     - review matching with alternative names `skos:altLabel` <https://github.com/infinite-dao/collector-matching/issues/1#issuecomment-1819337177> from WikiData (resource)
 
 - review life time matching
